@@ -16,12 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -32,6 +34,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -192,7 +197,7 @@ fun TopEncBar(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.add_entity)) },
                         onClick = {
-                            // TODO: add entity to entity list
+                            // TODO: Add entity to entity list
                             expanded = false
                         }
                     )
@@ -244,8 +249,11 @@ fun RoundCard(
 @Composable
 fun EntityCard(
     entity: EncounterEntity,
-    onEntityCardClick: () -> Unit
+    onEntityUpdated: (EncounterEntity) -> Unit
 ) {
+    // Show dialog for when updating entity stats
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.LightGray
@@ -258,7 +266,7 @@ fun EntityCard(
                 color = Color.Black,
                 shape = RoundedCornerShape(12.dp)
             )
-            .clickable { onEntityCardClick() }
+            .clickable { showDialog = true }
     ) {
         Row {
             // Entity looks
@@ -309,6 +317,53 @@ fun EntityCard(
                 }
             }
         }
+    }
+
+    //Things I want to be able to update
+    var curHP by remember { mutableStateOf(entity.currentHP.toString()) }
+    var curName by remember { mutableStateOf(entity.name) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val newHP = curHP.toIntOrNull()
+                        if (newHP != null) {
+                            val updatedEntity = entity.copy(currentHP = newHP)
+                            onEntityUpdated(updatedEntity)
+                            showDialog = false
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.save_button))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Text(stringResource(R.string.cancel_button))
+                }
+            },
+            title = {
+                Text(entity.name)
+            },
+            text = {
+                Column {
+                    Text(stringResource(R.string.current_hp))
+                    TextField(
+                        value = curHP,
+                        onValueChange = { curHP = it },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    )
+                    // TODO: Add effects
+                }
+            }
+        )
     }
 }
 
