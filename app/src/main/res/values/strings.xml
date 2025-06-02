@@ -6,4 +6,6 @@
 
     <string name="serp">Serp</string>
     <string name="encounter">Encounter</string>
+
+    <string name="serp_encounter">Serp Encounter</string>
 </resources>

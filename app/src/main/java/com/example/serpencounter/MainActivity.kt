@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import com.example.serpencounter.ui.screens.EncounterScreen
+import com.example.serpencounter.ui.screens.EntityListScreen
 import com.example.serpencounter.ui.screens.StartScreen
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             //StartScreen()
-            EncounterScreen()
+            //EncounterScreen()
+            EntityListScreen()
         }
     }
 }

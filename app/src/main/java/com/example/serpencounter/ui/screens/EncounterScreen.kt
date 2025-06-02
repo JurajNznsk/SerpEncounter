@@ -89,10 +89,10 @@ fun TopEncBar() {
 
             // Timer
             Timer()
-            // Settings button
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // Settings button
             IconButton(
                 onClick = {}
             ) {
@@ -168,7 +168,6 @@ fun BottomEncBar() {
             }
         }
     }
-    //Spacer(modifier = Modifier.size(50.dp))
 }
 
 @Composable
