@@ -1,6 +1,7 @@
 package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +18,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
+import com.example.serpencounter.ui.info.EncounterEntity
 import kotlinx.coroutines.delay
 
 @Composable
@@ -78,7 +82,7 @@ fun EncounterScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                CenterEnc()
+                ContentEncounterCenter()
             }
         }
     }
@@ -149,8 +153,74 @@ fun formatTime(seconds: Int): String {
 }
 
 @Composable
-fun CenterEnc() {
+fun ContentEncounterCenter() {
+    val myEntity = EncounterEntity("Zombie", 0, 19, 20, 11, R.drawable.zombie)
+    EntityCard(
+        entity = myEntity
+    ) {}
+}
 
+@Composable
+fun EntityCard(
+    entity: EncounterEntity,
+    onEntityCardClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable { onEntityCardClick() }
+    ) {
+        Row {
+            // Entity looks
+            Image(
+                painter = painterResource(id = entity.imageRes),
+                contentDescription = "${entity.name} image",
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(end = 16.dp),
+                contentScale = ContentScale.Crop
+            )
+            Column {
+                // Name + effect
+                Row {
+                    Text(
+                        text = entity.name,
+                        fontSize = 25.sp
+                    )
+                    // TODO: zoznam efektov ktore mozu byt entite pridelene
+                }
+                // AC + CurrentHP / MaxHP
+                Row {
+                    Text(
+                        text = "AC: ${entity.armorClass}",
+                        modifier = Modifier
+                            .padding(top = 33.dp)
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(
+                        text = "HP: ${entity.currentHP}/${entity.maxHP}",
+                        modifier = Modifier
+                            .padding(end = 4.dp, top = 33.dp)
+                    )
+                }
+                // HP bar
+                Row {
+                    LinearProgressIndicator(
+                        progress = { (entity.currentHP.toFloat() / entity.maxHP).coerceIn(0f, 1f) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .padding(end = 4.dp),
+                        color = Color(0xFF006400),
+                        trackColor = Color.Red,
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
