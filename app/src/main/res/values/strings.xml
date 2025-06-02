@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SerpEncounter</string>
+    <string name="encounter_button">Encounter</string>
+    <string name="entity_list_button">List of Entities</string>
 </resources>
