@@ -47,7 +47,10 @@ fun EncounterScreen() {
         )
         Column() {
             TopEncBar()
+            CenterEnc()
+
             Spacer(modifier = Modifier.weight(1f))
+
             BottomEncBar()
         }
 
@@ -56,31 +59,40 @@ fun EncounterScreen() {
 
 @Composable
 fun TopEncBar() {
-    Spacer(modifier = Modifier.height(50.dp))
     Surface(
         color = Color.Black,
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(130.dp)
     ) {
-        Row () {
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             // Back Arrow button
             IconButton(
                 onClick = {},
                 modifier = Modifier
                     .size(48.dp)
-                    .padding()
             ) {
                 Icon (
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.Red,
-                    modifier = Modifier.size(100.dp)
+                    tint = Color.White,
+                    modifier = Modifier.size(40.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+
             // Timer
             Timer()
             // Settings button
+
+            Spacer(modifier = Modifier.weight(1f))
+
             IconButton(
                 onClick = {}
             ) {
@@ -104,14 +116,21 @@ fun Timer() {
 }
 
 @Composable
+fun CenterEnc() {
+
+}
+
+@Composable
 fun BottomEncBar() {
     Surface(
         color = Color.Black,
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
+            .height(130.dp)
     ) {
         Row (
+            modifier = Modifier
+                .padding(bottom = 50.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -122,12 +141,18 @@ fun BottomEncBar() {
                 Icon (
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(30.dp)
                 )
             }
 
+            Spacer(modifier = Modifier.size(40.dp))
+
             // Button to control timer
             PlayPauseTimerButton()
+
+            Spacer(modifier = Modifier.size(40.dp))
 
             // Forward Arrow button
             IconButton(
@@ -135,12 +160,15 @@ fun BottomEncBar() {
             ) {
                 Icon (
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Back",
-                    tint = Color.White
+                    contentDescription = "Forward",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(30.dp)
                 )
             }
         }
     }
+    //Spacer(modifier = Modifier.size(50.dp))
 }
 
 @Composable
@@ -151,7 +179,9 @@ fun PlayPauseTimerButton() {
         Icon(
             imageVector = if (isPlaying) Icons.Default.Clear else Icons.Default.PlayArrow,
             contentDescription = if (isPlaying) "Pause" else "Play",
-            tint = Color.White
+            tint = Color.White,
+            modifier = Modifier
+                .size(50.dp)
         )
     }
 }
