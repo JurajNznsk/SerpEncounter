@@ -49,20 +49,25 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
 import kotlinx.coroutines.delay
+import kotlin.math.round
 
 @Composable
 fun EncounterScreen(
     onBackButtonClicked: () -> Unit
 ) {
+    // Round number
+    var roundNumber by remember { mutableStateOf(1) }
+
     // Entitiy List
     var entityList: List<EncounterListItem> by remember { mutableStateOf(listOf(
-        EncounterListItem.RoundItem(),
-        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie))
+        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie)),
+        EncounterListItem.EntityItem(EncounterEntity("Drbo", 10, 11, 13, 10, R.drawable.zombie)),
+        EncounterListItem.RoundItem()
         )) }
 
+    //Timer
     var timerRunning by remember { mutableStateOf(true) }
     var timeSeconds by remember { mutableStateOf(0) }
-
     // Timer Logic; starts coroutine - timer runs only when isRunning
     LaunchedEffect(timerRunning) {
         while (timerRunning) {
@@ -79,8 +84,20 @@ fun EncounterScreen(
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
             onPlayPauseButtonClicked = { timerRunning = it },
-            onForwardButtonClicked = { entityList = rotateEntitiesForward(entityList) },
-            onBackwardButtonClicked = { entityList = rotateEntitiesBackwards(entityList) }
+            onForwardButtonClicked = {
+                if (entityList.firstOrNull() is EncounterListItem.RoundItem) {
+                    roundNumber++
+                }
+                entityList = rotateEntitiesForward(entityList)
+            },
+            onBackwardButtonClicked = {
+                if (roundNumber > 0) {
+                    if (entityList.lastOrNull() is EncounterListItem.RoundItem) {
+                        roundNumber--
+                    }
+                    entityList = rotateEntitiesBackwards(entityList)
+                }
+            }
         ) }
     ) { innerPadding ->
         Box(modifier = Modifier
@@ -98,7 +115,7 @@ fun EncounterScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                ContentEncounterCenter(entityList)
+                EntityList(roundNumber, entityList)
             }
         }
     }
@@ -166,16 +183,6 @@ fun formatTime(seconds: Int): String {
     val min = (seconds % 3600) / 60
     val sec = seconds % 60
     return "%02d:%02d:%02d".format(hour, min, sec)
-}
-
-@Composable
-fun ContentEncounterCenter(
-    entityList: List<EncounterListItem>
-) {
-    var round = 250;
-
-
-    EntityList(round, entityList)
 }
 
 @Composable
