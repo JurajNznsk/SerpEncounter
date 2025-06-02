@@ -8,3 +8,9 @@ data class EncounterEntity(
     val armorClass: Int,
     val imageRes: Int
 )
+
+// Class that helps me put different items into Encounter Content List
+sealed class EncounterListItem {
+    data class EntityItem(val entity: EncounterEntity): EncounterListItem()
+    data class RoundItem(val name: String = ""): EncounterListItem()
+}

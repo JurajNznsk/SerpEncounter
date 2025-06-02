@@ -1,6 +1,7 @@
 package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -19,6 +23,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -36,10 +41,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
 import com.example.serpencounter.ui.info.EncounterEntity
+import com.example.serpencounter.ui.info.EncounterListItem
 import kotlinx.coroutines.delay
 
 @Composable
@@ -154,10 +162,46 @@ fun formatTime(seconds: Int): String {
 
 @Composable
 fun ContentEncounterCenter() {
-    val myEntity = EncounterEntity("Zombie", 0, 19, 20, 11, R.drawable.zombie)
-    EntityCard(
-        entity = myEntity
-    ) {}
+    var round = 250;
+    val sampleEntities: List<EncounterListItem> = listOf(
+        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie)),
+        EncounterListItem.EntityItem(EncounterEntity("Fabricio Izengrim", 10, 27, 28, 15, R.drawable.zombie)),
+        EncounterListItem.RoundItem(),
+        EncounterListItem.EntityItem(EncounterEntity("Skeleton", 10, 0, 8, 8, R.drawable.zombie))
+    )
+    EntityList(round, sampleEntities)
+}
+
+@Composable
+fun EntityList(
+    roundNum: Int,
+    encListItems: List<EncounterListItem>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        items(encListItems) { item ->
+            when (item) {
+                is EncounterListItem.RoundItem -> RoundCard(roundNum = roundNum)
+                is EncounterListItem.EntityItem -> EntityCard(entity = item.entity) {}
+            }
+        }
+    }
+}
+
+@Composable
+fun RoundCard(
+    roundNum: Int
+) {
+    Text(
+        text = "----------------------" + stringResource(R.string.round) + "#$roundNum ----------------------",
+        modifier = Modifier
+            .fillMaxWidth(),
+        color = Color.DarkGray,
+        fontSize = 20.sp,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
@@ -166,9 +210,17 @@ fun EntityCard(
     onEntityCardClick: () -> Unit
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White  // Your desired background color here
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .border(
+                width = 2.dp,
+                color = Color.Black,
+                shape = RoundedCornerShape(12.dp)
+            )
             .clickable { onEntityCardClick() }
     ) {
         Row {
@@ -195,7 +247,7 @@ fun EntityCard(
                     Text(
                         text = "AC: ${entity.armorClass}",
                         modifier = Modifier
-                            .padding(top = 33.dp)
+                            .padding(top = 38.dp)
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
@@ -203,13 +255,13 @@ fun EntityCard(
                     Text(
                         text = "HP: ${entity.currentHP}/${entity.maxHP}",
                         modifier = Modifier
-                            .padding(end = 4.dp, top = 33.dp)
+                            .padding(end = 4.dp, top = 38.dp)
                     )
                 }
                 // HP bar
                 Row {
                     LinearProgressIndicator(
-                        progress = { (entity.currentHP.toFloat() / entity.maxHP).coerceIn(0f, 1f) },
+                        progress = { (entity.currentHP.toFloat() / entity.maxHP).coerceIn(0f, 1f) }, // Ensures 0.0 - 1.0 value
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(6.dp)

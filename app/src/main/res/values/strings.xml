@@ -13,4 +13,6 @@
     <string name="enc_screen">EncounterScreen</string>
     <string name="saved_screen">SavedScreen</string>
     <string name="list_screen">ListScreen</string>
+
+    <string name="round">Round</string>
 </resources>
