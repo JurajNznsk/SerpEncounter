@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,22 +39,31 @@ import com.example.serpencounter.R
 
 @Composable
 fun EncounterScreen() {
-    Box() {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Column() {
-            TopEncBar()
-            CenterEnc()
+    Scaffold(
+        topBar = { TopEncBar() },
+        bottomBar = { BottomEncBar() },
+        containerColor = Color.Transparent // Needed for transparent scaffold
+    ) { innerPadding ->
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+        ) {
+            // Background image as the first child
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            BottomEncBar()
+            // Your main content layered on top
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CenterEnc()
+//                Spacer(modifier = Modifier.weight(1f))
+            }
         }
-
     }
 }
 
