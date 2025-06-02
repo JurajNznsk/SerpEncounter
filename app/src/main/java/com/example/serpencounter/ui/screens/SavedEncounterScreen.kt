@@ -1,7 +1,6 @@
 package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -32,7 +29,7 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
-fun EntityListScreen() {
+fun SavedEncounterScreen() {
     Box() {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -41,16 +38,16 @@ fun EntityListScreen() {
             modifier = Modifier.fillMaxSize()
         )
         Column {
-            TopListBar()
-            CenterList()
+            TopSavedBar()
+            CenterSaved()
             Spacer(modifier = Modifier.weight(1f))
-            BottomListBar()
+            BottomSavedBar()
         }
     }
 }
 
 @Composable
-fun TopListBar() {
+fun TopSavedBar() {
     Surface(
         color = Color.Black,
         modifier = Modifier
@@ -94,12 +91,12 @@ fun TopListBar() {
 }
 
 @Composable
-fun CenterList() {
+fun CenterSaved() {
 
 }
 
 @Composable
-fun BottomListBar() {
+fun BottomSavedBar() {
     Surface(
         color = Color.Black,
         modifier = Modifier
