@@ -323,6 +323,7 @@ fun EntityCard(
     var curHP by remember { mutableStateOf(entity.currentHP.toString()) }
     var curName by remember { mutableStateOf(entity.name) }
 
+    // TODO: Does not work yet
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
