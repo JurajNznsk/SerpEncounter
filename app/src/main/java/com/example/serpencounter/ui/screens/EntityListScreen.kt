@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,18 +34,25 @@ import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
 fun EntityListScreen() {
-    Box() {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Column {
-            TopListBar()
-            CenterList()
-            Spacer(modifier = Modifier.weight(1f))
-            BottomListBar()
+    Scaffold(
+        topBar = { TopListBar() },
+        bottomBar = { BottomListBar() },
+        contentColor = Color.Transparent
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            Column {
+                CenterList()
+            }
         }
     }
 }
