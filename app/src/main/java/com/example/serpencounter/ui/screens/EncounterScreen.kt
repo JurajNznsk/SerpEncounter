@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,9 +39,23 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun EncounterScreen() {
+    var timerRunning by remember { mutableStateOf(true) }
+    var timeSeconds by remember { mutableStateOf(0) }
+
+    // Timer Logic; starts coroutine - timer runs only when isRunning
+    LaunchedEffect(timerRunning) {
+        while (timerRunning) {
+            delay(1000L)
+            timeSeconds++
+        }
+    }
+
     Scaffold(
-        topBar = { TopEncBar() },
-        bottomBar = { BottomEncBar() }
+        topBar = { TopEncBar(timeSeconds) },
+        bottomBar = { BottomEncBar(
+            isRunning = timerRunning,
+            onPlayPauseButtonClicked = { timerRunning = it }
+        ) }
     ) { innerPadding ->
         Box(modifier = Modifier
             .fillMaxSize()
@@ -66,7 +79,9 @@ fun EncounterScreen() {
 }
 
 @Composable
-fun TopEncBar() {
+fun TopEncBar(
+    timeSeconds: Int
+) {
     Surface(
         color = Color.Black,
         modifier = Modifier
@@ -96,7 +111,10 @@ fun TopEncBar() {
             Spacer(modifier = Modifier.weight(1f))
 
             // Timer
-            Timer()
+            Text (
+                text = formatTime(timeSeconds),
+                color = Color.White
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -115,25 +133,6 @@ fun TopEncBar() {
     }
 }
 
-@Composable
-fun Timer() {
-    var time by remember { mutableStateOf(0) }
-    var isRunning by remember { mutableStateOf(true) }
-
-    // Logic; starts corutine - timer runs only when isRunning
-    LaunchedEffect(isRunning) {
-        while (isRunning) {
-            delay(1000L)
-            time++
-        }
-    }
-
-    Text (
-        text = formatTime(time),
-        color = Color.White
-    )
-}
-
 fun formatTime(seconds: Int): String {
     val hour = seconds / 3600
     val min = (seconds % 3600) / 60
@@ -147,7 +146,10 @@ fun CenterEnc() {
 }
 
 @Composable
-fun BottomEncBar() {
+fun BottomEncBar(
+    isRunning: Boolean,
+    onPlayPauseButtonClicked: (Boolean) -> Unit
+) {
     Surface(
         color = Color.Black,
         modifier = Modifier
@@ -176,7 +178,10 @@ fun BottomEncBar() {
             Spacer(modifier = Modifier.size(40.dp))
 
             // Button to control timer
-            PlayPauseTimerButton()
+            PlayPauseTimerButton(
+                isRunning = isRunning,
+                onClicked = { onPlayPauseButtonClicked(!isRunning) }
+            )
 
             Spacer(modifier = Modifier.size(40.dp))
 
@@ -197,13 +202,16 @@ fun BottomEncBar() {
 }
 
 @Composable
-fun PlayPauseTimerButton() {
-    var isPlaying by remember { mutableStateOf(false) }
-
-    IconButton(onClick = { isPlaying = !isPlaying }) {
+fun PlayPauseTimerButton(
+    isRunning: Boolean,
+    onClicked: () -> Unit
+) {
+    IconButton(
+        onClick = onClicked
+    ) {
         Icon(
-            imageVector = if (isPlaying) Icons.Default.Clear else Icons.Default.PlayArrow,
-            contentDescription = if (isPlaying) "Pause" else "Play",
+            imageVector = if (isRunning) Icons.Default.Clear else Icons.Default.PlayArrow,
+            contentDescription = if (isRunning) "Pause" else "Play",
             tint = Color.White,
             modifier = Modifier
                 .size(50.dp)
