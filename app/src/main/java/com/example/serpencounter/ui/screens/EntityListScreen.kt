@@ -36,8 +36,7 @@ import com.example.serpencounter.ui.theme.OldLondonFont
 fun EntityListScreen() {
     Scaffold(
         topBar = { TopListBar() },
-        bottomBar = { BottomListBar() },
-        contentColor = Color.Transparent
+        bottomBar = { BottomListBar() }
     ) { innerPadding ->
         Box(
             modifier = Modifier

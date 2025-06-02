@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,19 +31,26 @@ import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
 fun SavedEncounterScreen() {
-    Box() {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Column {
-            TopSavedBar()
-            CenterSaved()
-            Spacer(modifier = Modifier.weight(1f))
-            BottomSavedBar()
+    Scaffold(
+        topBar = { TopSavedBar() },
+        bottomBar = { BottomSavedBar() }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            Column {
+                CenterSaved()
+            }
         }
+
     }
 }
 

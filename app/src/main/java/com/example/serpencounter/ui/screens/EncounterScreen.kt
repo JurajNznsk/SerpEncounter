@@ -41,27 +41,24 @@ import com.example.serpencounter.R
 fun EncounterScreen() {
     Scaffold(
         topBar = { TopEncBar() },
-        bottomBar = { BottomEncBar() },
-        containerColor = Color.Transparent // Needed for transparent scaffold
+        bottomBar = { BottomEncBar() }
     ) { innerPadding ->
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
         ) {
-            // Background image as the first child
             Image(
                 painter = painterResource(id = R.drawable.background),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             )
-
-            // Your main content layered on top
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 CenterEnc()
-//                Spacer(modifier = Modifier.weight(1f))
             }
         }
     }
