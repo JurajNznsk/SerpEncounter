@@ -56,12 +56,9 @@ fun EncounterScreen(
 ) {
     // Entitiy List
     var entityList: List<EncounterListItem> by remember { mutableStateOf(listOf(
-        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie)),
-        EncounterListItem.EntityItem(EncounterEntity("Fabricio Izengrim", 10, 27, 28, 15, R.drawable.zombie)),
         EncounterListItem.RoundItem(),
-        EncounterListItem.EntityItem(EncounterEntity("Skeleton", 10, 0, 8, 8, R.drawable.zombie)),
-        EncounterListItem.EntityItem(EncounterEntity("Skeleton", 10, 0, 8, 8, R.drawable.zombie))
-    )) }
+        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie))
+        )) }
 
     var timerRunning by remember { mutableStateOf(true) }
     var timeSeconds by remember { mutableStateOf(0) }
@@ -82,8 +79,8 @@ fun EncounterScreen(
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
             onPlayPauseButtonClicked = { timerRunning = it },
-            onForwardButtonClicked = { rotateEntitiesForward(entityList) },
-            onBackwardButtonClicked = { rotateEntitiesBackwards(entityList) }
+            onForwardButtonClicked = { entityList = rotateEntitiesForward(entityList) },
+            onBackwardButtonClicked = { entityList = rotateEntitiesBackwards(entityList) }
         ) }
     ) { innerPadding ->
         Box(modifier = Modifier
