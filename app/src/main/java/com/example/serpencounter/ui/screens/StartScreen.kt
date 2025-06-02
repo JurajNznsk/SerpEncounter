@@ -20,5 +20,10 @@ fun StartScreen() {
         ) {
             Text(text = stringResource(id = R.string.entity_list_button))
         }
+        OutlinedButton(
+            onClick = {}
+        ) {
+            Text(text = stringResource(id = R.string.saved_encounters_button))
+        }
     }
 }
