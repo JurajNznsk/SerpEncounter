@@ -7,10 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.core.view.WindowCompat
-import com.example.serpencounter.ui.screens.EncounterScreen
-import com.example.serpencounter.ui.screens.EntityListScreen
-import com.example.serpencounter.ui.screens.SavedEncounterScreen
 import com.example.serpencounter.ui.screens.StartScreen
 
 class MainActivity : ComponentActivity() {
@@ -25,14 +21,10 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // Landscape mode forbidden
 
         setContent {
-            StartScreen()
-            //EncounterScreen()
-            //EntityListScreen()
-            //SavedEncounterScreen()
-            //SerpEncApp()
+            SerpEncApp()
         }
     }
 }

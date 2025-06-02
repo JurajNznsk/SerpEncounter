@@ -28,7 +28,11 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
-fun StartScreen() {
+fun StartScreen(
+    onEncounterButtonClicked: () -> Unit,
+    onListButtonClicked: () -> Unit,
+    onSavedButtonClicked: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -60,7 +64,7 @@ fun StartScreen() {
 
             // Encounter button
             OutlinedButton(
-                onClick = {},
+                onClick = onEncounterButtonClicked,
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
@@ -79,7 +83,7 @@ fun StartScreen() {
             }
             // List of Entities button
             OutlinedButton(
-                onClick = {},
+                onClick = onListButtonClicked,
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
@@ -98,7 +102,7 @@ fun StartScreen() {
             }
             // Saved Enc button
             OutlinedButton(
-                onClick = {},
+                onClick = onSavedButtonClicked,
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
