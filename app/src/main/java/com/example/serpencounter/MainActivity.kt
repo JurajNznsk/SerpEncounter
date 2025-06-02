@@ -1,5 +1,6 @@
 package com.example.serpencounter
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,12 +25,14 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContent {
-            //StartScreen()
+            StartScreen()
             //EncounterScreen()
             //EntityListScreen()
-            SavedEncounterScreen()
+            //SavedEncounterScreen()
+            //SerpEncApp()
         }
     }
 }
