@@ -15,4 +15,7 @@
     <string name="list_screen">ListScreen</string>
 
     <string name="round">Round</string>
+
+    <string name="save_encounter">Save Encounter</string>
+    <string name="add_entity">Add Entity</string>
 </resources>

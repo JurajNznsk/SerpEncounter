@@ -24,6 +24,8 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -164,15 +166,37 @@ fun TopEncBar(
             Spacer(modifier = Modifier.weight(1f))
 
             // Settings button
-            IconButton(
-                onClick = {}
-            ) {
-                Icon (
-                    imageVector = Icons.AutoMirrored.Filled.List,
-                    contentDescription = "More...",
-                    tint = Color.White,
-                    modifier = Modifier.size(100.dp)
-                )
+            var expanded by remember { mutableStateOf(false) }
+            Box {
+                IconButton(
+                    onClick = { expanded = true }
+                ) {
+                    Icon (
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = "More...",
+                        tint = Color.White,
+                        modifier = Modifier.size(100.dp)
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(R.string.save_encounter)) },
+                        onClick = {
+                            // TODO: Save encounter (into saved encounters)
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(R.string.add_entity)) },
+                        onClick = {
+                            // TODO: add entity to entity list
+                            expanded = false
+                        }
+                    )
+                }
             }
         }
     }
