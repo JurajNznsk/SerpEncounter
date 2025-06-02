@@ -3,4 +3,7 @@
     <string name="encounter_button">Encounter</string>
     <string name="entity_list_button">List of Entities</string>
     <string name="saved_encounters_button">Saved Encounters</string>
+
+    <string name="serp">Serp</string>
+    <string name="encounter">Encounter</string>
 </resources>

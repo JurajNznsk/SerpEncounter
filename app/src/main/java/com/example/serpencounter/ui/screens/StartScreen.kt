@@ -1,18 +1,31 @@
 package com.example.serpencounter.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
+import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
 fun StartScreen() {
@@ -30,28 +43,77 @@ fun StartScreen() {
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Logo
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = null
+            // Logo {Serp}
+            Text (
+                text = stringResource(id = R.string.serp),
+                fontFamily = OldLondonFont,
+                fontSize = 120.sp
             )
+            // Logo {\nEncounter}
+            Text (
+                text = stringResource(id = R.string.encounter),
+                fontFamily = OldLondonFont,
+                fontSize = 120.sp
+            )
+
+            Spacer(modifier = Modifier.height(200.dp)) // Spacing between "logo" and buttons
+
             // Encounter button
             OutlinedButton(
-                onClick = {}
+                onClick = {},
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(60.dp)
+                    .width(240.dp)
             ) {
-                Text(text = stringResource(id = R.string.encounter_button))
+                Text(
+                    text = stringResource(id = R.string.encounter_button),
+                    fontSize = 23.sp
+                )
             }
             // List of Entities button
             OutlinedButton(
-                onClick = {}
+                onClick = {},
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(60.dp)
+                    .width(240.dp)
             ) {
-                Text(text = stringResource(id = R.string.entity_list_button))
+                Text(
+                    text = stringResource(id = R.string.entity_list_button),
+                    fontSize = 23.sp
+                )
             }
             // Saved Enc button
             OutlinedButton(
-                onClick = {}
+                onClick = {},
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(60.dp)
+                    .width(240.dp)
             ) {
-                Text(text = stringResource(id = R.string.saved_encounters_button))
+                Text(
+                    text = stringResource(id = R.string.saved_encounters_button),
+                    fontSize = 23.sp
+                )
             }
         }
     }
