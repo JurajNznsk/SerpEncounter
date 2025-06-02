@@ -18,13 +18,13 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +36,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.serpencounter.R
+import kotlinx.coroutines.delay
 
 @Composable
 fun EncounterScreen() {
@@ -116,10 +117,28 @@ fun TopEncBar() {
 
 @Composable
 fun Timer() {
+    var time by remember { mutableStateOf(0) }
+    var isRunning by remember { mutableStateOf(true) }
+
+    // Logic; starts corutine - timer runs only when isRunning
+    LaunchedEffect(isRunning) {
+        while (isRunning) {
+            delay(1000L)
+            time++
+        }
+    }
+
     Text (
-        text = "00:00:00",
+        text = formatTime(time),
         color = Color.White
     )
+}
+
+fun formatTime(seconds: Int): String {
+    val hour = seconds / 3600
+    val min = (seconds % 3600) / 60
+    val sec = seconds % 60
+    return "%02d:%02d:%02d".format(hour, min, sec)
 }
 
 @Composable
