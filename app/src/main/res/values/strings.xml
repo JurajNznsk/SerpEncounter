@@ -8,4 +8,9 @@
     <string name="encounter">Encounter</string>
 
     <string name="serp_encounter">Serp Encounter</string>
+
+    <string name="start_screen">StartScreen</string>
+    <string name="enc_screen">EncounterScreen</string>
+    <string name="saved_screen">SavedScreen</string>
+    <string name="list_screen">ListScreen</string>
 </resources>
