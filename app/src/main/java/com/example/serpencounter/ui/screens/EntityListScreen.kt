@@ -33,9 +33,13 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
-fun EntityListScreen() {
+fun EntityListScreen(
+    onBackButtonClicked: () -> Unit
+) {
     Scaffold(
-        topBar = { TopListBar() },
+        topBar = { TopListBar(
+            onBackButtonClicked = onBackButtonClicked
+        ) },
         bottomBar = { BottomListBar() }
     ) { innerPadding ->
         Box(
@@ -57,7 +61,9 @@ fun EntityListScreen() {
 }
 
 @Composable
-fun TopListBar() {
+fun TopListBar(
+    onBackButtonClicked: () -> Unit
+) {
     Surface(
         color = Color.Black,
         modifier = Modifier
@@ -72,7 +78,7 @@ fun TopListBar() {
         ) {
             // Back Arrow button
             IconButton(
-                onClick = {},
+                onClick = onBackButtonClicked,
                 modifier = Modifier
                     .size(48.dp)
             ) {

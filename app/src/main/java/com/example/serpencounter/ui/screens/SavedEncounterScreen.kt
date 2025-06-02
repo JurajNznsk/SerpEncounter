@@ -30,9 +30,13 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
-fun SavedEncounterScreen() {
+fun SavedEncounterScreen(
+    onBackButtonClicked: () -> Unit
+) {
     Scaffold(
-        topBar = { TopSavedBar() },
+        topBar = { TopSavedBar(
+            onBackButtonClicked = onBackButtonClicked
+        ) },
         bottomBar = { BottomSavedBar() }
     ) { innerPadding ->
         Box(
@@ -55,7 +59,9 @@ fun SavedEncounterScreen() {
 }
 
 @Composable
-fun TopSavedBar() {
+fun TopSavedBar(
+    onBackButtonClicked: () -> Unit
+) {
     Surface(
         color = Color.Black,
         modifier = Modifier
@@ -70,7 +76,7 @@ fun TopSavedBar() {
         ) {
             // Back Arrow button
             IconButton(
-                onClick = {},
+                onClick = onBackButtonClicked,
                 modifier = Modifier
                     .size(48.dp)
             ) {

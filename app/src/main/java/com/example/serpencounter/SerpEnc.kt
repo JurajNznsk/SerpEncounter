@@ -44,18 +44,21 @@ fun SerpEncApp(
             )
         }
         composable(route = SerpEncScreens.Encounter.name) {
-            EncounterScreen()
+            EncounterScreen(
+                onBackButtonClicked = { navController.popBackStack() }
+            )
         }
         composable(route = SerpEncScreens.List.name) {
-            EntityListScreen()
+            EntityListScreen(
+                onBackButtonClicked = { navController.popBackStack() }
+            )
         }
         composable(route = SerpEncScreens.Saved.name) {
-            SavedEncounterScreen()
+            SavedEncounterScreen(
+                onBackButtonClicked = { navController.popBackStack() }
+            )
         }
     }
-
-
-
 }
 
 

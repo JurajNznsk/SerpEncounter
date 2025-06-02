@@ -39,7 +39,9 @@ import com.example.serpencounter.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun EncounterScreen() {
+fun EncounterScreen(
+    onBackButtonClicked: () -> Unit
+) {
     var timerRunning by remember { mutableStateOf(true) }
     var timeSeconds by remember { mutableStateOf(0) }
 
@@ -52,7 +54,10 @@ fun EncounterScreen() {
     }
 
     Scaffold(
-        topBar = { TopEncBar(timeSeconds) },
+        topBar = { TopEncBar(
+            timeSeconds = timeSeconds,
+            onBackButtonClicked = onBackButtonClicked
+        ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
             onPlayPauseButtonClicked = { timerRunning = it }
@@ -81,7 +86,8 @@ fun EncounterScreen() {
 
 @Composable
 fun TopEncBar(
-    timeSeconds: Int
+    timeSeconds: Int,
+    onBackButtonClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -97,7 +103,7 @@ fun TopEncBar(
         ) {
             // Back Arrow button
             IconButton(
-                onClick = {},
+                onClick = onBackButtonClicked,
                 modifier = Modifier
                     .size(48.dp)
             ) {
