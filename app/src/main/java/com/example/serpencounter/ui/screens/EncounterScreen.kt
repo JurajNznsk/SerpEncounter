@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
 import kotlinx.coroutines.delay
 
@@ -113,6 +114,7 @@ fun TopEncBar(
             // Timer
             Text (
                 text = formatTime(timeSeconds),
+                fontSize = 25.sp,
                 color = Color.White
             )
 
