@@ -254,6 +254,7 @@ fun EntityEncCard(
     var showDialog by remember { mutableStateOf(false) }
 
     Card(
+        onClick = { showDialog = true },
         colors = CardDefaults.cardColors(
             containerColor = Color.LightGray
         ),
@@ -265,7 +266,6 @@ fun EntityEncCard(
                 color = Color.Black,
                 shape = RoundedCornerShape(12.dp)
             )
-            .clickable { showDialog = true }
     ) {
         Row {
             // Entity looks
