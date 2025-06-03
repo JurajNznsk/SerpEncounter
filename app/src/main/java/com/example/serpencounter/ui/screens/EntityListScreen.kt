@@ -170,18 +170,18 @@ fun EntityListCard(
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Entity looks
-            Image(
-                painter = painterResource(id = entity.imageRes),
-                contentDescription = entity.name,
-                modifier = Modifier
-                    .fillMaxSize()
-                    //.size(64.dp)
-            )
             // Entity name
             Text(
                 text = entity.name,
-                fontSize = 16.sp
+                fontSize = 20.sp
+            )
+            // Entity looks
+            Image(
+                painter = painterResource(id = entity.imageRes),
+                contentDescription = "${entity.name} image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
     }

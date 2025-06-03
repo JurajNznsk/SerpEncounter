@@ -272,10 +272,10 @@ fun EntityEncCard(
             Image(
                 painter = painterResource(id = entity.imageRes),
                 contentDescription = "${entity.name} image",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(100.dp)
-                    .padding(end = 16.dp),
-                contentScale = ContentScale.Crop
+                    .padding(end = 16.dp)
             )
             Column {
                 // Name + effect
