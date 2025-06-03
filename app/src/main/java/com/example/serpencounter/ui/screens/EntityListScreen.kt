@@ -1,6 +1,8 @@
 package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -148,11 +151,19 @@ fun EntityListCard(
     entity: EncounterEntity
 ) {
     Card(
-        onClick = {},
+        onClick = { },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.LightGray
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f),
-        elevation = CardDefaults.cardElevation(4.dp)
+            .aspectRatio(1f) // For square shape
+            .padding(8.dp)
+            .border(
+                width = 2.dp,
+                color = Color.Black,
+                shape = RoundedCornerShape(12.dp)
+            )
     ) {
         Column(
             modifier = Modifier
@@ -164,8 +175,8 @@ fun EntityListCard(
                 painter = painterResource(id = entity.imageRes),
                 contentDescription = entity.name,
                 modifier = Modifier
-                    .size(64.dp)
-                    .clip(CircleShape)
+                    .fillMaxSize()
+                    //.size(64.dp)
             )
             // Entity name
             Text(
