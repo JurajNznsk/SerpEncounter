@@ -224,7 +224,7 @@ fun EntityList(
     ) {
         items(encListItems) { item ->
             when (item) {
-                is EncounterListItem.RoundItem -> RoundCard(roundNum = roundNum)
+                is EncounterListItem.RoundItem -> RoundEncCard(roundNum = roundNum)
                 is EncounterListItem.EntityItem -> EntityEncCard(entity = item.entity) {}
             }
         }
@@ -232,7 +232,7 @@ fun EntityList(
 }
 
 @Composable
-fun RoundCard(
+fun RoundEncCard(
     roundNum: Int
 ) {
     Text(
