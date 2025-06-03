@@ -56,7 +56,6 @@ import com.example.serpencounter.R
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
 import kotlinx.coroutines.delay
-import kotlin.math.round
 
 @Composable
 fun EncounterScreen(
@@ -226,7 +225,7 @@ fun EntityList(
         items(encListItems) { item ->
             when (item) {
                 is EncounterListItem.RoundItem -> RoundCard(roundNum = roundNum)
-                is EncounterListItem.EntityItem -> EntityCard(entity = item.entity) {}
+                is EncounterListItem.EntityItem -> EntityEncCard(entity = item.entity) {}
             }
         }
     }
@@ -247,7 +246,7 @@ fun RoundCard(
 }
 
 @Composable
-fun EntityCard(
+fun EntityEncCard(
     entity: EncounterEntity,
     onEntityUpdated: (EncounterEntity) -> Unit
 ) {
