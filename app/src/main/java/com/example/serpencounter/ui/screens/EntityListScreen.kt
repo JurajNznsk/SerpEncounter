@@ -4,17 +4,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -23,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -30,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
+import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.theme.OldLondonFont
 
 @Composable
@@ -54,7 +62,18 @@ fun EntityListScreen(
                 modifier = Modifier.fillMaxSize()
             )
             Column {
-                CenterList()
+                val sampleEntities = listOf(
+                    EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Drbo", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Vrbo", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
+                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
+                )
+
+                EntityGrid(sampleEntities)
             }
         }
     }
@@ -107,8 +126,54 @@ fun TopListBar(
 }
 
 @Composable
-fun CenterList() {
+fun EntityGrid(
+    entities: List<EncounterEntity>
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(entities) { entity ->
+            EntityListCard(entity = entity)
+        }
+    }
+}
 
+@Composable
+fun EntityListCard(
+    entity: EncounterEntity
+) {
+    Card(
+        onClick = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Entity looks
+            Image(
+                painter = painterResource(id = entity.imageRes),
+                contentDescription = entity.name,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+            )
+            // Entity name
+            Text(
+                text = entity.name,
+                fontSize = 16.sp
+            )
+        }
+    }
 }
 
 @Composable
