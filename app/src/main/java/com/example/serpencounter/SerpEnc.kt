@@ -46,10 +46,8 @@ fun SerpEncApp(
             )
         }
         composable(route = SerpEncScreens.List.name) {
-            val viewM: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
             EntityListScreen(
-                onBackButtonClicked = { navController.popBackStack() },
-                viewModel = viewM
+                onBackButtonClicked = { navController.popBackStack() }
             )
         }
         composable(route = SerpEncScreens.Saved.name) {
