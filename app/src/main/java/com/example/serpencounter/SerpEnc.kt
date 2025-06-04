@@ -1,23 +1,21 @@
 package com.example.serpencounter
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.screens.EncounterScreen
 import com.example.serpencounter.ui.screens.EntityListScreen
 import com.example.serpencounter.ui.screens.SavedEncounterScreen
 import com.example.serpencounter.ui.screens.StartScreen
+import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
 enum class SerpEncScreens(@StringRes val title: Int) {
     Start(title = R.string.start_screen),
@@ -49,8 +47,12 @@ fun SerpEncApp(
             )
         }
         composable(route = SerpEncScreens.List.name) {
+            Log.d("JAKO", "Before view model")
+            val viewM: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
+            Log.d("JAKO", "After view model")
             EntityListScreen(
-                onBackButtonClicked = { navController.popBackStack() }
+                onBackButtonClicked = { navController.popBackStack() },
+                viewModel = viewM
             )
         }
         composable(route = SerpEncScreens.Saved.name) {

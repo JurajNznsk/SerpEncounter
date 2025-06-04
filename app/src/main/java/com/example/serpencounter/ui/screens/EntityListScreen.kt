@@ -1,6 +1,6 @@
 package com.example.serpencounter.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,14 +43,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
-import com.example.serpencounter.ui.info.EncounterEntity
+import com.example.serpencounter.data.SerpCharacter
+import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.theme.OldLondonFont
+import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
 @Composable
 fun EntityListScreen(
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    viewModel: CharacterListViewModel
 ) {
+    val charListUiState by viewModel.charactersUiState.collectAsState()
+
     Scaffold(
         topBar = { TopListBar(
             onBackButtonClicked = onBackButtonClicked
@@ -68,18 +75,12 @@ fun EntityListScreen(
                 modifier = Modifier.fillMaxSize()
             )
             Column {
-                val sampleEntities = listOf(
-                    EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Drbo", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Vrbo", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
-                    EncounterEntity("Izengrim Nightmoon", 10, 11, 13, 10, R.drawable.zombie),
-                )
-
-                EntityGrid(sampleEntities)
+                if (charListUiState.charList.isEmpty())
+                {
+                    Text(text = "Oops")
+                } else {
+                    EntityGrid(charListUiState.charList)
+                }
             }
         }
     }
@@ -133,7 +134,7 @@ fun TopListBar(
 
 @Composable
 fun EntityGrid(
-    entities: List<EncounterEntity>
+    characters: List<SerpCharacter>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -143,15 +144,15 @@ fun EntityGrid(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(entities) { entity ->
-            EntityListCard(entity = entity)
+        items(characters) { character ->
+            EntityListCard(character = character)
         }
     }
 }
 
 @Composable
 fun EntityListCard(
-    entity: EncounterEntity
+    character: SerpCharacter
 ) {
     var showStats by remember { mutableStateOf(false)}
 
@@ -178,13 +179,13 @@ fun EntityListCard(
             ) {
                 // Entity name
                 Text(
-                    text = entity.name,
+                    text = character.name,
                     fontSize = 20.sp
                 )
                 // Entity looks
                 Image(
-                    painter = painterResource(id = entity.imageRes),
-                    contentDescription = "${entity.name} image",
+                    painter = painterResource(id = character.imageRes),
+                    contentDescription = "${character.name} image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -196,7 +197,7 @@ fun EntityListCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = entity.name,
+                    text = character.name,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -209,8 +210,8 @@ fun EntityListCard(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "HP: ${entity.maxHP}")
-                    Text(text = "AC: ${entity.armorClass}")
+                    Text(text = "HP: ${character.maxHP}")
+                    Text(text = "AC: ${character.armorClass}")
                 }
                 //TODO: play with entity info
             }

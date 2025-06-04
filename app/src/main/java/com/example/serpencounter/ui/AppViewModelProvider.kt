@@ -11,11 +11,11 @@ import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         // Character Entry View Model
-        initializer {
+        initializer<CharacterEntryViewModel> {
             CharacterEntryViewModel(serpEncApplication().container.characterRepository)
         }
         // Characters List View Model
-        initializer {
+        initializer<CharacterListViewModel> {
             CharacterListViewModel(serpEncApplication().container.characterRepository)
         }
     }

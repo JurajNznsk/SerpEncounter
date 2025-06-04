@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class CharacterListViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    val charactersUiStat: StateFlow<CharactersUiState> =
+class CharacterListViewModel(characterRepository: CharacterRepository) : ViewModel() {
+    val charactersUiState: StateFlow<CharactersUiState> =
         characterRepository.getAllCharactersStream().map { CharactersUiState(it) }
             .stateIn(
                 scope = viewModelScope,
