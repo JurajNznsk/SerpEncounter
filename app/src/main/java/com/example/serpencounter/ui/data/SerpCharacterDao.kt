@@ -13,8 +13,8 @@ interface SerpCharacterDao {
     @Query("SELECT * FROM characters")
     fun getAll(): Flow<List<SerpCharacter>>
 
-    @Query("SELECT * FROM characters WHERE id = id")
-    fun get(id: Int): Flow<SerpCharacter?>
+    @Query("SELECT * FROM characters WHERE id = :charId")
+    fun get(charId: Int): Flow<SerpCharacter?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(character: SerpCharacter)
