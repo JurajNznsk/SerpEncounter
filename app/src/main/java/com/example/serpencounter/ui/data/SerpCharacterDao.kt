@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -12,9 +13,15 @@ interface SerpCharacterDao {
     @Query("SELECT * FROM characters")
     fun getAll(): Flow<List<SerpCharacter>>
 
+    @Query("SELECT * FROM characters WHERE id = id")
+    fun get(id: Int): Flow<SerpCharacter?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: SerpCharacter)
+    suspend fun insert(character: SerpCharacter)
+
+    @Update
+    suspend fun update(character: SerpCharacter)
 
     @Delete
-    suspend fun delete(entity: SerpCharacter)
+    suspend fun delete(character: SerpCharacter)
 }
