@@ -24,4 +24,7 @@ interface SerpCharacterDao {
 
     @Delete
     suspend fun delete(character: SerpCharacter)
+
+    @Query("DELETE FROM characters")
+    suspend fun deleteAll()
 }

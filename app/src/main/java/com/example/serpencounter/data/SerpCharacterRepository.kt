@@ -13,4 +13,5 @@ class SerpCharacterRepository(private val characterDao: SerpCharacterDao) : Char
 
     override suspend fun updateCharacter(char: SerpCharacter) = characterDao.update(char)
 
+    override suspend fun deleteAllCharacters() = characterDao.deleteAll()
 }
