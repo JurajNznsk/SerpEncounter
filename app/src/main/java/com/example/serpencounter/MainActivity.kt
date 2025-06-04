@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SerpEncApp()
-
         }
     }
 }
