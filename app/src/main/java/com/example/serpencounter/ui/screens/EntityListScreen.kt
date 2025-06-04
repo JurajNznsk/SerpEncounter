@@ -1,6 +1,5 @@
 package com.example.serpencounter.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -43,10 +42,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
 import com.example.serpencounter.data.SerpCharacter
-import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.theme.OldLondonFont
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 

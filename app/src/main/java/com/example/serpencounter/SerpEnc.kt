@@ -1,6 +1,5 @@
 package com.example.serpencounter
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -47,9 +46,7 @@ fun SerpEncApp(
             )
         }
         composable(route = SerpEncScreens.List.name) {
-            Log.d("JAKO", "Before view model")
             val viewM: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
-            Log.d("JAKO", "After view model")
             EntityListScreen(
                 onBackButtonClicked = { navController.popBackStack() },
                 viewModel = viewM
