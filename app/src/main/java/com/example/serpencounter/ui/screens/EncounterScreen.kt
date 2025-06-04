@@ -2,11 +2,13 @@ package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +23,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -30,6 +34,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,12 +43,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -51,9 +59,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
+import com.example.serpencounter.data.SerpCharacter
+import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
+import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -120,7 +133,13 @@ fun EncounterScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                EntityList(roundNumber, entityList)
+                EntityList(
+                    roundNum = roundNumber,
+                    encListItems = entityList,
+                    // TODO: move up and down logic
+                    onEntityMoveUp = {},
+                    onEntityMoveDown = {}
+                )
             }
         }
     }
@@ -195,11 +214,36 @@ fun TopEncBar(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.add_entity)) },
                         onClick = {
-                            // TODO: Add entity to entity list
+                            // TODO: add entity
                             expanded = false
                         }
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun EntitySelectionDialog(
+    onAdd: (SerpCharacter) -> Unit,
+) {
+    Dialog(
+        onDismissRequest = {}
+    ) {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            tonalElevation = 8.dp
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.select_char)
+                )
+
+                Spacer(modifier = Modifier.size(8.dp))
             }
         }
     }
@@ -215,7 +259,9 @@ fun formatTime(seconds: Int): String {
 @Composable
 fun EntityList(
     roundNum: Int,
-    encListItems: List<EncounterListItem>
+    encListItems: List<EncounterListItem>,
+    onEntityMoveUp: () -> Unit,
+    onEntityMoveDown: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -224,7 +270,13 @@ fun EntityList(
         items(encListItems) { item ->
             when (item) {
                 is EncounterListItem.RoundItem -> RoundEncCard(roundNum = roundNum)
-                is EncounterListItem.EntityItem -> EntityEncCard(entity = item.entity) {}
+                is EncounterListItem.EntityItem ->
+                    EntityEncCard(
+                        entity = item.entity,
+                        onEntityUpdated = {},
+                        onEntityMoveUp = onEntityMoveUp,
+                        onEntityMoveDown = onEntityMoveDown
+                    )
             }
         }
     }
@@ -247,7 +299,9 @@ fun RoundEncCard(
 @Composable
 fun EntityEncCard(
     entity: EncounterEntity,
-    onEntityUpdated: (EncounterEntity) -> Unit
+    onEntityUpdated: (EncounterEntity) -> Unit,
+    onEntityMoveUp: () -> Unit,
+    onEntityMoveDown: () -> Unit
 ) {
     // Show dialog for when updating entity stats
     var showDialog by remember { mutableStateOf(false) }
@@ -276,7 +330,10 @@ fun EntityEncCard(
                     .size(100.dp)
                     .padding(end = 16.dp)
             )
-            Column {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
                 // Name + effect
                 Row {
                     Text(
@@ -311,6 +368,29 @@ fun EntityEncCard(
                             .padding(end = 4.dp),
                         color = Color(0xFF006400),
                         trackColor = Color.Red,
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Entity move up
+                IconButton(
+                    onClick = onEntityMoveUp
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = stringResource(R.string.move_entity_up)
+                    )
+                }
+                IconButton(
+                    onClick = onEntityMoveDown
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = stringResource(R.string.move_entity_down)
                     )
                 }
             }
