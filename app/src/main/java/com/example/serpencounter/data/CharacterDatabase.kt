@@ -1,4 +1,4 @@
-package com.example.serpencounter.ui.data
+package com.example.serpencounter.data
 
 import android.content.Context
 import androidx.room.Database
