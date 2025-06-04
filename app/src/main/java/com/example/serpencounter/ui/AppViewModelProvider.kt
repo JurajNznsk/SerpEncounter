@@ -6,12 +6,17 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.serpencounter.SerpEncounterApplication
 import com.example.serpencounter.ui.viewModels.CharacterEntryViewModel
+import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         // Character Entry View Model
         initializer {
             CharacterEntryViewModel(serpEncApplication().container.characterRepository)
+        }
+        // Characters List View Model
+        initializer {
+            CharacterListViewModel(serpEncApplication().container.characterRepository)
         }
     }
 }
