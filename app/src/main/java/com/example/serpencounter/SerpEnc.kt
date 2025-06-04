@@ -1,26 +1,22 @@
 package com.example.serpencounter
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.screens.EncounterScreen
 import com.example.serpencounter.ui.screens.EntityListScreen
 import com.example.serpencounter.ui.screens.SavedEncounterScreen
 import com.example.serpencounter.ui.screens.StartScreen
-import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
-enum class SerpEncScreens(@StringRes val title: Int) {
-    Start(title = R.string.start_screen),
-    Encounter(title = R.string.enc_screen),
-    List(title = R.string.list_screen),
-    Saved(title = R.string.saved_screen);
+enum class SerpEncScreens() {
+    Start,
+    Encounter,
+    List,
+    Saved;
 }
 
 @Composable
