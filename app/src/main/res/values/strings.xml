@@ -24,6 +24,8 @@
     <string name="add_character_to_db">Add SerpCharacter</string>
     <string name="delete_all_from_db">Delete All SerpCharacters</string>
 
+    <string name="create_serpChar">Create new SerpCharacter</string>
+
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="current_hp">Current HP</string>
