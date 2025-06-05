@@ -7,21 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.serpencounter.data.SerpCharacter
-import com.example.serpencounter.ui.AppViewModelProvider
-import com.example.serpencounter.ui.viewModels.CharacterListViewModel
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,27 +26,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SerpEncApp()
-            // TestAddCharacter()
-        }
-    }
-}
-
-@Composable
-fun TestAddCharacter() {
-    val viewModel: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
-    Column {
-        Spacer(Modifier.size(64.dp))
-        Button(
-            onClick = {
-                val newCharacter = SerpCharacter(
-                    name = "Zombie",
-                    maxHP = 13,
-                    armorClass = 10,
-                    imageRes = R.drawable.zombie
-                )
-                viewModel.addSerpCharacter(newCharacter)
-            }) {
-            Text("Add Character")
         }
     }
 }

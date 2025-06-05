@@ -52,7 +52,6 @@ import com.example.serpencounter.R
 import com.example.serpencounter.data.SerpCharacter
 import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.theme.OldLondonFont
-import com.example.serpencounter.ui.viewModels.CharacterEntryViewModel
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
 @Composable
