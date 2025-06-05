@@ -1,40 +1,42 @@
 <resources>
     <string name="app_name">SerpEncounter</string>
+
+    <!-- Start Screen -->
+    <string name="serp">Serp</string>
+    <string name="encounter">Encounter</string>
+
     <string name="encounter_button">Encounter</string>
     <string name="entity_list_button">List of Entities</string>
     <string name="saved_encounters_button">Saved Encounters</string>
 
-    <string name="serp">Serp</string>
-    <string name="encounter">Encounter</string>
-
+    <!-- Top App Bars -->
     <string name="serp_encounter">Serp Encounter</string>
+    <string name="back_button">Back</string>
+    <string name="option_button">Options</string>
 
-    <string name="start_screen">StartScreen</string>
-    <string name="enc_screen">EncounterScreen</string>
-    <string name="saved_screen">SavedScreen</string>
-    <string name="list_screen">ListScreen</string>
-
+    <!-- Encounter Screen -->
     <string name="round">Round</string>
-
     <string name="save_encounter">Save Encounter</string>
     <string name="add_entity">Add Entity</string>
     <string name="move_entity_up">Move Up</string>
     <string name="move_entity_down">Move Down</string>
 
+    <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
-    <string name="delete_all_from_db">Delete All SerpCharacters</string>
+    <string name="delete_all_from_db">Delete all SerpCharacters</string>
 
+    <!-- CharacterEntry Screen -->
     <string name="create_serpChar">Create new SerpCharacter</string>
-
+    <string name="name_to_add">Name</string>
+    <string name="max_hp_to_add">Max HP</string>
+    <string name="armor_class_to_add">Armor Class</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
-    <string name="current_hp">Current HP</string>
+
+
     <string name="current_name">Name</string>
+    <string name="current_hp">Current HP</string>
 
     <string name="select_char">Select character</string>
 
-    <string name="no_serp_chars_found">No characters found!</string>
-
-    <string name="back_button">Back</string>
-    <string name="option_button">Options</string>
 </resources>

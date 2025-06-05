@@ -1,5 +1,6 @@
 package com.example.serpencounter.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,15 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -90,7 +89,7 @@ fun TopEntryBar() {
             Spacer(modifier = Modifier.weight(1f))
             // Logo {Serp Encounter}
             Text(
-                text = stringResource(R.string.serp_encounter),
+                text = stringResource(R.string.create_serpChar),
                 fontFamily = OldLondonFont,
                 color = Color.White,
                 fontSize = 30.sp
@@ -118,37 +117,82 @@ fun CenterEntry(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            Text(
-                text = stringResource(R.string.create_serpChar),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-            )
-
+            // Add new name
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Name") },
-                modifier = Modifier.fillMaxWidth()
+                label = {
+                    Text(
+                        text = stringResource(R.string.name_to_add)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray,
+                    focusedLabelColor = Color.Black,
+                    unfocusedLabelColor = Color.LightGray,
+                    focusedContainerColor = Color.LightGray,
+                    unfocusedContainerColor = Color.DarkGray,
+                    cursorColor = Color.Gray
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Add new max HP
             OutlinedTextField(
                 value = maxHP,
                 onValueChange = { maxHP = it },
-                label = { Text("Max HP") },
+                label = {
+                    Text(
+                        text = stringResource(R.string.max_hp_to_add)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray,
+                    focusedLabelColor = Color.Black,
+                    unfocusedLabelColor = Color.LightGray,
+                    focusedContainerColor = Color.LightGray,
+                    unfocusedContainerColor = Color.DarkGray,
+                    cursorColor = Color.Gray
+                ),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Add new Armor Class
             OutlinedTextField(
                 value = armorClass,
                 onValueChange = { armorClass = it },
-                label = { Text("Armor Class") },
+                label = {
+                    Text(
+                        text = stringResource(R.string.armor_class_to_add)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray,
+                    focusedLabelColor = Color.Black,
+                    unfocusedLabelColor = Color.LightGray,
+                    focusedContainerColor = Color.LightGray,
+                    unfocusedContainerColor = Color.DarkGray,
+                    cursorColor = Color.Gray
+                ),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
 
@@ -158,15 +202,44 @@ fun CenterEntry(
                 .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = {
-                viewModel.addSerpCharacter(name, maxHP, armorClass)
-                onSaveButtonClicked()
-            }) {
-                Text("Save")
+            // Cancel Button
+            Button(
+                onClick = { onCancelButtonClicked() },
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(2.dp, Color.DarkGray),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .width(180.dp)
+                    .height(80.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel_button),
+                    fontSize = 30.sp
+                )
             }
-
-            OutlinedButton(onClick = { onCancelButtonClicked() }) {
-                Text("Cancel")
+            // Save Button
+            Button(
+                onClick = {
+                    viewModel.addSerpCharacter(name, maxHP, armorClass)
+                    onSaveButtonClicked()
+                },
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(2.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.DarkGray,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .width(180.dp)
+                    .height(80.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.save_button),
+                    fontSize = 30.sp
+                )
             }
         }
     }
