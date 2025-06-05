@@ -20,6 +20,7 @@
     <string name="add_entity">Add Entity</string>
     <string name="move_entity_up">Move Up</string>
     <string name="move_entity_down">Move Down</string>
+    <string name="choose_entity">Choose:</string>
 
     <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
@@ -36,7 +37,5 @@
 
     <string name="current_name">Name</string>
     <string name="current_hp">Current HP</string>
-
-    <string name="select_char">Select character</string>
 
 </resources>

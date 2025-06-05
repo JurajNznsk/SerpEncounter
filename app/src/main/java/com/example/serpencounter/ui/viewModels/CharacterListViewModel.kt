@@ -18,6 +18,7 @@ class CharacterListViewModel(private val characterRepository: CharacterRepositor
                 started = SharingStarted.WhileSubscribed(5_000L),
                 initialValue = CharactersUiState()
             )
+    fun getAllSerpCharacters() = charactersUiState
 
     fun addSerpCharacter(character: SerpCharacter) {
         viewModelScope.launch {

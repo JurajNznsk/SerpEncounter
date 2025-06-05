@@ -59,10 +59,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
-import com.example.serpencounter.data.SerpCharacter
 import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
+import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 import com.example.serpencounter.ui.viewModels.EncounterViewModel
 import kotlinx.coroutines.delay
 
@@ -89,7 +89,7 @@ fun EncounterScreen(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
             onBackButtonClicked = onBackButtonClicked,
-            onAddEntityButtonClicked = { viewModel.addEntityToEncounter(8) }
+            onAddEntityButtonClicked = {  }
         ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
@@ -128,8 +128,7 @@ fun EncounterScreen(
 @Composable
 fun TopEncBar(
     timeSeconds: Int,
-    onBackButtonClicked: () -> Unit,
-    onAddEntityButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -170,6 +169,7 @@ fun TopEncBar(
 
             // Options button
             var expanded by remember { mutableStateOf(false) }
+            var showEntityPickDialog by remember { mutableStateOf(false) }
             Box {
                 IconButton(
                     onClick = { expanded = true }
@@ -195,23 +195,32 @@ fun TopEncBar(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.add_entity)) },
                         onClick = {
-                            // TODO: add entity
                             expanded = false
-                            onAddEntityButtonClicked()
+                            showEntityPickDialog = true
                         }
                     )
                 }
             }
+            if (showEntityPickDialog) {
+                EntitySelectionDialog(
+                    onClickHideDialog = { showEntityPickDialog = false }
+                )
+            }
+
         }
     }
 }
 
 @Composable
 fun EntitySelectionDialog(
-    onAdd: (SerpCharacter) -> Unit,
+    onClickHideDialog: () -> Unit,
+    viewModel: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val serpCharacterList by viewModel.charactersUiState.collectAsState()
+    val encViewModel = viewModel<EncounterViewModel>(factory = AppViewModelProvider.Factory)
+
     Dialog(
-        onDismissRequest = {}
+        onDismissRequest = onClickHideDialog
     ) {
         Surface(
             shape = MaterialTheme.shapes.medium,
@@ -222,10 +231,36 @@ fun EntitySelectionDialog(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.select_char)
+                    text = stringResource(R.string.choose_entity),
+                    fontSize = 20.sp,
+                    color = Color.Black
                 )
-
                 Spacer(modifier = Modifier.size(8.dp))
+                // List of addable characters
+                LazyColumn {
+                    items(serpCharacterList.charList) { character ->
+                        Card(
+                            onClick = {
+                                onClickHideDialog()
+                                encViewModel.addEntityToEncounter(character.id)
+                            }
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            ) {
+                                Text(
+                                    text = character.name,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Text(
+                                    text = character.maxHP.toString()
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
