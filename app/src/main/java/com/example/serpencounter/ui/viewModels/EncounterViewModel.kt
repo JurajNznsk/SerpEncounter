@@ -45,6 +45,18 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         }
     }
 
+    fun updateEntity(entity: EncounterEntity) {
+        _uiEntityList.update { currentList ->
+            currentList.map { item ->
+                if (item is EncounterListItem.EntityItem && item.entity.name == entity.name) {
+                    item.copy(entity = entity)
+                } else {
+                    item
+                }
+            }
+        }
+    }
+
     // Entity list functionality
     fun rotateForward() {
         val currentList = _uiEntityList.value

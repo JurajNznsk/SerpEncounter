@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -34,11 +33,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -53,7 +52,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -117,6 +115,7 @@ fun EncounterScreen(
                 EntityList(
                     roundNum = roundNumber,
                     encListItems = entityList,
+                    viewModel = viewModel,
                     onEntityMoveUp = { entity -> viewModel.moveEntityUp(entity) },
                     onEntityMoveDown = { entity -> viewModel.moveEntityDown(entity) }
                 )
@@ -316,6 +315,7 @@ fun formatTime(seconds: Int): String {
 fun EntityList(
     roundNum: Int,
     encListItems: List<EncounterListItem>,
+    viewModel: EncounterViewModel,
     onEntityMoveUp: (EncounterEntity) -> Unit,
     onEntityMoveDown: (EncounterEntity) -> Unit
 ) {
@@ -329,7 +329,7 @@ fun EntityList(
                 is EncounterListItem.EntityItem ->
                     EntityEncCard(
                         entity = item.entity,
-                        onEntityUpdated = {},
+                        viewModel = viewModel,
                         onEntityMoveUp = { onEntityMoveUp(item.entity) },
                         onEntityMoveDown = { onEntityMoveDown(item.entity) }
                     )
@@ -355,7 +355,7 @@ fun RoundEncCard(
 @Composable
 fun EntityEncCard(
     entity: EncounterEntity,
-    onEntityUpdated: (EncounterEntity) -> Unit,
+    viewModel: EncounterViewModel,
     onEntityMoveUp: () -> Unit,
     onEntityMoveDown: () -> Unit
 ) {
@@ -454,52 +454,104 @@ fun EntityEncCard(
         }
     }
 
-    //Things I want to be able to update
-    var curHP by remember { mutableStateOf(entity.currentHP.toString()) }
-    var curName by remember { mutableStateOf(entity.name) }
-
-    // TODO: Does not work yet
     if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val newHP = curHP.toIntOrNull()
-                        if (newHP != null) {
-                            val updatedEntity = entity.copy(currentHP = newHP)
-                            onEntityUpdated(updatedEntity)
-                            showDialog = false
+        EditEntityDialog(
+            entity = entity,
+            onDismiss = { showDialog = false },
+            onConfirm = viewModel::updateEntity
+        )
+    }
+}
+
+@Composable
+fun EditEntityDialog(
+    entity: EncounterEntity,
+    onDismiss: () -> Unit,
+    onConfirm: (EncounterEntity) -> Unit
+) {
+    var hp by remember { mutableStateOf(entity.currentHP.toString()) }
+    var ac by remember { mutableStateOf(entity.armorClass.toString()) }
+
+    Dialog(
+        onDismissRequest = onDismiss
+    ) {
+        Surface(
+            shape = RoundedCornerShape(12.dp),
+            tonalElevation = 8.dp
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.edit_entity),
+                    fontSize = 25.sp,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = hp,
+                    onValueChange = { hp = it.filter { char -> char.isDigit() } },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.edit_hp)
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = ac,
+                    onValueChange = { ac = it.filter { char -> char.isDigit() } },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.edit_ac)
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                // TODO: add effects
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    TextButton(
+                        onClick = onDismiss
+                    ) {
+                        Text(
+                            text = stringResource(R.string.edit_cancel)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    TextButton(
+                        onClick = {
+                            val updatedEntity = entity.copy(
+                                currentHP = hp.toIntOrNull() ?: entity.currentHP,
+                                armorClass = ac.toIntOrNull() ?: entity.armorClass
+                            )
+                            onConfirm(updatedEntity)
+                            onDismiss()
                         }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.edit_save)
+                        )
                     }
-                ) {
-                    Text(stringResource(R.string.save_button))
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        showDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.cancel_button))
-                }
-            },
-            title = {
-                Text(entity.name)
-            },
-            text = {
-                Column {
-                    Text(stringResource(R.string.current_hp))
-                    TextField(
-                        value = curHP,
-                        onValueChange = { curHP = it },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                    // TODO: Add effects
                 }
             }
-        )
+        }
     }
 }
 

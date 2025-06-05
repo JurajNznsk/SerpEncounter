@@ -23,6 +23,11 @@
     <string name="move_entity_down">Move Down</string>
     <string name="choose_entity">Choose:</string>
     <string name="no_char_found">No character found</string>
+    <string name="edit_entity">Edit</string>
+    <string name="edit_hp">HP</string>
+    <string name="edit_ac">AC</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_cancel">Cancel</string>
 
     <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
