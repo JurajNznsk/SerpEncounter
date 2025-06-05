@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class CharacterListViewModel(characterRepository: CharacterRepository) : ViewModel() {
+class CharacterListViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
     val charactersUiState: StateFlow<CharactersUiState> =
         characterRepository.getAllCharactersStream().map { CharactersUiState(it) }
             .stateIn(
@@ -17,6 +18,12 @@ class CharacterListViewModel(characterRepository: CharacterRepository) : ViewMod
                 started = SharingStarted.WhileSubscribed(5_000L),
                 initialValue = CharactersUiState()
             )
+
+    fun addSerpCharacter(character: SerpCharacter) {
+        viewModelScope.launch {
+            characterRepository.insertCharacter(character)
+        }
+    }
 }
 
 data class CharactersUiState(val charList: List<SerpCharacter> = listOf())

@@ -20,6 +20,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -58,7 +60,8 @@ fun EntityListScreen(
 
     Scaffold(
         topBar = { TopListBar(
-            onBackButtonClicked = onBackButtonClicked
+            onBackButtonClicked = onBackButtonClicked,
+            onOptionButtonClicked = { }
         ) },
         bottomBar = { BottomListBar() }
     ) { innerPadding ->
@@ -74,22 +77,12 @@ fun EntityListScreen(
                 modifier = Modifier.fillMaxSize()
             )
             Column {
-                if (charListUiState.charList.isEmpty())
+                if (!charListUiState.charList.isEmpty())
                 {
-                    // TODO: remove this text; '+' sign instead
-                    Text(
-                        text = stringResource(R.string.no_serp_chars_found),
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                } else {
                     EntityGrid(
                         characters = charListUiState.charList
                     )
                 }
-                // TODO: add character, delete characters
             }
         }
     }
@@ -97,7 +90,8 @@ fun EntityListScreen(
 
 @Composable
 fun TopListBar(
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onOptionButtonClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -119,7 +113,7 @@ fun TopListBar(
             ) {
                 Icon (
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back_button),
                     tint = Color.White,
                     modifier = Modifier
                         .size(40.dp)
@@ -130,13 +124,28 @@ fun TopListBar(
 
             // Logo {Serp Encounter}
             Text(
-                modifier = Modifier
-                    .padding(end = 20.dp),
                 text = stringResource(R.string.serp_encounter),
                 fontFamily = OldLondonFont,
                 color = Color.White,
                 fontSize = 30.sp
             )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // Options button: insert, delete all
+            IconButton(
+                onClick = onOptionButtonClicked,
+                modifier = Modifier
+                    .size(48.dp)
+            ) {
+                Icon (
+                    imageVector = Icons.AutoMirrored.Filled.List,
+                    contentDescription = stringResource(R.string.option_button),
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(40.dp)
+                )
+            }
         }
     }
 }
