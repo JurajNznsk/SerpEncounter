@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -247,7 +248,11 @@ fun EntitySelectionDialog(
                             onClick = {
                                 onClickHideDialog()
                                 encViewModel.addEntityToEncounter(character.id)
-                            }
+                            },
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Black,
+                                contentColor = Color.White
+                            )
                         ) {
                             Row(
                                 modifier = Modifier
@@ -256,11 +261,31 @@ fun EntitySelectionDialog(
                             ) {
                                 Text(
                                     text = character.name,
-                                    modifier = Modifier.weight(1f)
+                                    fontSize = 20.sp,
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                        .weight(1f),
+                                    textAlign = TextAlign.Start
                                 )
-                                Text(
-                                    text = character.maxHP.toString()
-                                )
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "HP: %3d".format(character.maxHP),
+                                        fontSize = 18.sp,
+                                        modifier = Modifier
+                                            .padding(end = 8.dp),
+                                        textAlign = TextAlign.End
+                                    )
+                                    Text(
+                                        text = "AC: %3d".format(character.armorClass),
+                                        fontSize = 18.sp,
+                                        modifier = Modifier
+                                            .padding(end = 8.dp),
+                                        textAlign = TextAlign.End
+                                    )
+                                }
                             }
                         }
                     }

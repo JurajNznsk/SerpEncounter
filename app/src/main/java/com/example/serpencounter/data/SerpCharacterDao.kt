@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SerpCharacterDao {
-    @Query("SELECT * FROM characters")
+    @Query("SELECT * FROM characters ORDER BY name ASC")
     fun getAll(): Flow<List<SerpCharacter>>
 
     @Query("SELECT * FROM characters WHERE id = :charId")

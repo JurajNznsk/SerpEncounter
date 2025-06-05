@@ -196,6 +196,8 @@ fun CenterEntry(
             )
         }
 
+        // TODO: image picker
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
