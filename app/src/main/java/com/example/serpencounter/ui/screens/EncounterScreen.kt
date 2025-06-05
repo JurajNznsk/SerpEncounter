@@ -242,53 +242,63 @@ fun EntitySelectionDialog(
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 // List of addable characters
-                LazyColumn {
-                    items(serpCharacterList.charList) { character ->
-                        Card(
-                            onClick = {
-                                onClickHideDialog()
-                                encViewModel.addEntityToEncounter(character.id)
-                            },
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp)
-                            ) {
-                                Text(
-                                    text = character.name,
-                                    fontSize = 20.sp,
-                                    modifier = Modifier
-                                        .padding(start = 8.dp)
-                                        .weight(1f),
-                                    textAlign = TextAlign.Start
+                if (serpCharacterList.charList.isNotEmpty()) {
+                    LazyColumn {
+                        items(serpCharacterList.charList) { character ->
+                            Card(
+                                onClick = {
+                                    onClickHideDialog()
+                                    encViewModel.addEntityToEncounter(character.id)
+                                },
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.Black,
+                                    contentColor = Color.White
                                 )
+                            ) {
                                 Row(
-                                    horizontalArrangement = Arrangement.End,
-                                    verticalAlignment = Alignment.CenterVertically
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 8.dp)
                                 ) {
                                     Text(
-                                        text = "HP: %3d".format(character.maxHP),
-                                        fontSize = 18.sp,
+                                        text = character.name,
+                                        fontSize = 20.sp,
                                         modifier = Modifier
-                                            .padding(end = 8.dp),
-                                        textAlign = TextAlign.End
+                                            .padding(start = 8.dp)
+                                            .weight(1f),
+                                        textAlign = TextAlign.Start
                                     )
-                                    Text(
-                                        text = "AC: %3d".format(character.armorClass),
-                                        fontSize = 18.sp,
-                                        modifier = Modifier
-                                            .padding(end = 8.dp),
-                                        textAlign = TextAlign.End
-                                    )
+                                    Row(
+                                        horizontalArrangement = Arrangement.End,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = "HP: %3d".format(character.maxHP),
+                                            fontSize = 18.sp,
+                                            modifier = Modifier
+                                                .padding(end = 8.dp),
+                                            textAlign = TextAlign.End
+                                        )
+                                        Text(
+                                            text = "AC: %3d".format(character.armorClass),
+                                            fontSize = 18.sp,
+                                            modifier = Modifier
+                                                .padding(end = 8.dp),
+                                            textAlign = TextAlign.End
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
+                } else {
+                    Text(
+                        text = stringResource(R.string.no_char_found),
+                        fontSize = 15.sp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(start = 2.dp)
+                    )
                 }
             }
         }
