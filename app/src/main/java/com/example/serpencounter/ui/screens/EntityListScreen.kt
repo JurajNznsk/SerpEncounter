@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -279,12 +280,43 @@ fun EntityListCard(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Column(
-                    horizontalAlignment = Alignment.Start,
+                Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "HP: ${character.maxHP}")
-                    Text(text = "AC: ${character.armorClass}")
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .padding(top = 32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.hp),
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "${character.maxHP}",
+                            fontSize = 32.sp,
+                            color = Color.Green
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .padding(top = 32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.ac),
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "${character.armorClass}",
+                            fontSize = 32.sp,
+                            color = Color.Blue
+                        )
+                    }
                 }
                 //TODO: play with entity info
             }

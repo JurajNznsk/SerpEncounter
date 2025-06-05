@@ -32,6 +32,8 @@
     <string name="cancel_delete_one">Cancel</string>
     <string name="hold_delete">hold to delete</string>
     <string name="detele_char">Delete</string>
+    <string name="hp">HP</string>
+    <string name="ac">AC</string>
 
     <!-- CharacterEntry Screen -->
     <string name="create_serpChar">Create new SerpCharacter</string>

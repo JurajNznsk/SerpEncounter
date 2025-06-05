@@ -2,7 +2,6 @@ package com.example.serpencounter.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
 import com.example.serpencounter.data.CharacterRepository
 import com.example.serpencounter.data.SerpCharacter

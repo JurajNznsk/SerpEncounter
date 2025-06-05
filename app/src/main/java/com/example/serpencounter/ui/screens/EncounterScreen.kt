@@ -43,6 +43,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,7 +74,7 @@ fun EncounterScreen(
 ) {
     //Timer
     var timerRunning by remember { mutableStateOf(true) }
-    var timeSeconds by remember { mutableStateOf(0) }
+    var timeSeconds by remember { mutableIntStateOf(0) }
     // Timer Logic; starts coroutine - timer runs only when isRunning
     LaunchedEffect(timerRunning) {
         while (timerRunning) {
