@@ -8,7 +8,6 @@ import com.example.serpencounter.data.SerpCharacter
 import kotlinx.coroutines.launch
 
 class CharacterEntryViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    //TODO: enter of new char to DB
     fun addSerpCharacter(name: String, maxHP: String, armorClass: String) {
         val nameValue = name.trim().ifBlank { "NaN" }
         val hp = maxHP.toIntOrNull() ?: 0

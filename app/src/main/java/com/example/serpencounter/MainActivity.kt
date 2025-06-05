@@ -22,8 +22,6 @@ class MainActivity : ComponentActivity() {
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // Landscape mode forbidden
 
-
-
         setContent {
             SerpEncApp()
         }

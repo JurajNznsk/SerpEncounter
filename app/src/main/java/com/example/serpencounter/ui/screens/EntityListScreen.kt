@@ -66,6 +66,7 @@ fun EntityListScreen(
         topBar = { TopListBar(
             onBackButtonClicked = onBackButtonClicked,
             onAddCharacterClicked = onAddCharacterClicked,
+            onAddDefaultCharactersClicked = { viewModel.addDefaultSerpCharacter() },
             onDeleteAllCharactersClicked = { viewModel.deleteAllSerpCharacters() }
         ) },
         bottomBar = { BottomListBar() }
@@ -94,6 +95,7 @@ fun EntityListScreen(
 fun TopListBar(
     onBackButtonClicked: () -> Unit,
     onAddCharacterClicked: () -> Unit,
+    onAddDefaultCharactersClicked: () -> Unit,
     onDeleteAllCharactersClicked: () -> Unit
 ) {
     Surface(
@@ -158,6 +160,13 @@ fun TopListBar(
                         onClick = {
                             expanded = false
                             onAddCharacterClicked()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(R.string.add_default)) },
+                        onClick = {
+                            expanded = false
+                            onAddDefaultCharactersClicked()
                         }
                     )
                     DropdownMenuItem(

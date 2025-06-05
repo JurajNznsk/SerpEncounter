@@ -2,6 +2,7 @@ package com.example.serpencounter.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.serpencounter.R
 import com.example.serpencounter.data.CharacterRepository
 import com.example.serpencounter.data.SerpCharacter
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,9 +20,24 @@ class CharacterListViewModel(private val characterRepository: CharacterRepositor
                 initialValue = CharactersUiState()
             )
 
-    fun addSerpCharacter(character: SerpCharacter) {
+    fun addDefaultSerpCharacter() {
         viewModelScope.launch {
-            characterRepository.insertCharacter(character)
+            characterRepository.insertCharacter(
+                SerpCharacter(
+                    name = "Zombie",
+                    maxHP = 22,
+                    armorClass = 8,
+                    imageRes = R.drawable.zombie
+                )
+            )
+            characterRepository.insertCharacter(
+                SerpCharacter(
+                    name = "Skeleton",
+                    maxHP = 13,
+                    armorClass = 13,
+                    imageRes = R.drawable.skeleton
+                )
+            )
         }
     }
 

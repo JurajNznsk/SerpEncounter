@@ -25,6 +25,7 @@
 
     <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
+    <string name="add_default">Add default</string>
     <string name="delete_all_from_db">Delete ALL</string>
 
     <!-- CharacterEntry Screen -->
