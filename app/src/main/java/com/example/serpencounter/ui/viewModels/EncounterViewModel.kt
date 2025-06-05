@@ -73,4 +73,34 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
 
         _uiEntityList.value = mutableList
     }
+
+    fun moveEntityUp(entity: EncounterEntity) {
+        _uiEntityList.update { currentList ->
+            val list = currentList.toMutableList()
+            val index = list.indexOfFirst { it is EncounterListItem.EntityItem && it.entity == entity }
+
+            if (index > 0 && list[index - 1] !is EncounterListItem.RoundItem) {
+                val temp = list[index]
+                list[index] = list[index - 1]
+                list[index - 1] = temp
+            }
+
+            list
+        }
+    }
+
+    fun moveEntityDown(entity: EncounterEntity) {
+        _uiEntityList.update { currentList ->
+            val list = currentList.toMutableList()
+            val index = list.indexOfFirst { it is EncounterListItem.EntityItem && it.entity == entity }
+
+            if (index != -1 && index < list.lastIndex && list[index + 1] !is EncounterListItem.RoundItem) {
+                val temp = list[index]
+                list[index] = list[index + 1]
+                list[index + 1] = temp
+            }
+
+            list
+        }
+    }
 }

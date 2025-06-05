@@ -116,9 +116,8 @@ fun EncounterScreen(
                 EntityList(
                     roundNum = roundNumber,
                     encListItems = entityList,
-                    // TODO: move up and down logic
-                    onEntityMoveUp = {},
-                    onEntityMoveDown = {}
+                    onEntityMoveUp = { entity -> viewModel.moveEntityUp(entity) },
+                    onEntityMoveDown = { entity -> viewModel.moveEntityDown(entity) }
                 )
             }
         }
@@ -282,8 +281,8 @@ fun formatTime(seconds: Int): String {
 fun EntityList(
     roundNum: Int,
     encListItems: List<EncounterListItem>,
-    onEntityMoveUp: () -> Unit,
-    onEntityMoveDown: () -> Unit
+    onEntityMoveUp: (EncounterEntity) -> Unit,
+    onEntityMoveDown: (EncounterEntity) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -296,8 +295,8 @@ fun EntityList(
                     EntityEncCard(
                         entity = item.entity,
                         onEntityUpdated = {},
-                        onEntityMoveUp = onEntityMoveUp,
-                        onEntityMoveDown = onEntityMoveDown
+                        onEntityMoveUp = { onEntityMoveUp(item.entity) },
+                        onEntityMoveDown = { onEntityMoveDown(item.entity) }
                     )
             }
         }
