@@ -1,5 +1,6 @@
 package com.example.serpencounter.ui.info
 
+import com.example.serpencounter.R
 import java.util.UUID
 
 data class EncounterEntity(
@@ -8,6 +9,11 @@ data class EncounterEntity(
     val currentHP: Int,
     val maxHP: Int,
     val armorClass: Int,
+    var effects: List<Effect> = listOf(
+            Effect(name = "poison", imageRes = R.drawable.poison),
+            Effect(name = "burning", imageRes = R.drawable.fire),
+            Effect(name = "slow", imageRes = R.drawable.slow)
+        ),
     val imageRes: Int
 )
 

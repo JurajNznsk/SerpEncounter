@@ -392,11 +392,25 @@ fun EntityEncCard(
             ) {
                 // Name + effect
                 Row {
+                    // Name
                     Text(
                         text = entity.name,
                         fontSize = 25.sp
                     )
-                    // TODO: zoznam efektov ktore mozu byt entite pridelene
+                    Spacer(modifier = Modifier.weight(1f))
+                    // List of effects (images)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        entity.effects.forEach { effect ->
+                            Image(
+                                painter = painterResource( id = effect.imageRes ),
+                                contentDescription = effect.name,
+                                modifier = Modifier
+                                    .size(32.dp)
+                            )
+                        }
+                    }
                 }
                 // AC + CurrentHP / MaxHP
                 Row {
