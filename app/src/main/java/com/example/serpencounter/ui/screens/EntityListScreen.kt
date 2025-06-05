@@ -66,7 +66,8 @@ fun EntityListScreen(
     Scaffold(
         topBar = { TopListBar(
             onBackButtonClicked = onBackButtonClicked,
-            onAddCharacterClicked = onAddCharacterClicked
+            onAddCharacterClicked = onAddCharacterClicked,
+            onDeleteAllCharactersClicked = { viewModel.deleteAllSerpCharacters() }
         ) },
         bottomBar = { BottomListBar() }
     ) { innerPadding ->
@@ -93,7 +94,8 @@ fun EntityListScreen(
 @Composable
 fun TopListBar(
     onBackButtonClicked: () -> Unit,
-    onAddCharacterClicked: () -> Unit
+    onAddCharacterClicked: () -> Unit,
+    onDeleteAllCharactersClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -155,7 +157,6 @@ fun TopListBar(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.add_character_to_db)) },
                         onClick = {
-                            // TODO: Insert into DB
                             expanded = false
                             onAddCharacterClicked()
                         }
@@ -168,8 +169,8 @@ fun TopListBar(
                             )
                         },
                         onClick = {
-                            // TODO: Delete all from DB
                             expanded = false
+                            onDeleteAllCharactersClicked()
                         }
                     )
                 }

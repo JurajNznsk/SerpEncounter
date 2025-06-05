@@ -23,7 +23,7 @@
 
     <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
-    <string name="delete_all_from_db">Delete all SerpCharacters</string>
+    <string name="delete_all_from_db">Delete ALL</string>
 
     <!-- CharacterEntry Screen -->
     <string name="create_serpChar">Create new SerpCharacter</string>

@@ -24,6 +24,12 @@ class CharacterListViewModel(private val characterRepository: CharacterRepositor
             characterRepository.insertCharacter(character)
         }
     }
+
+    fun deleteAllSerpCharacters() {
+        viewModelScope.launch {
+            characterRepository.deleteAllCharacters()
+        }
+    }
 }
 
 data class CharactersUiState(val charList: List<SerpCharacter> = listOf())
