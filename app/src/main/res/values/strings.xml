@@ -16,6 +16,7 @@
 
     <!-- Encounter Screen -->
     <string name="round">Round</string>
+    <string name="reset_timer">Reset Timer</string>
     <string name="save_encounter">Save Encounter</string>
     <string name="add_entity">Add Entity</string>
     <string name="move_entity_up">Move Up</string>

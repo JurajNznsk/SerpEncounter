@@ -89,7 +89,7 @@ fun EncounterScreen(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
             onBackButtonClicked = onBackButtonClicked,
-            onAddEntityButtonClicked = {  }
+            onResetTimerClicked = { timeSeconds = 0 }
         ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
@@ -128,7 +128,8 @@ fun EncounterScreen(
 @Composable
 fun TopEncBar(
     timeSeconds: Int,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onResetTimerClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -185,6 +186,10 @@ fun TopEncBar(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(R.string.reset_timer)) },
+                        onClick = onResetTimerClicked
+                    )
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.save_encounter)) },
                         onClick = {
