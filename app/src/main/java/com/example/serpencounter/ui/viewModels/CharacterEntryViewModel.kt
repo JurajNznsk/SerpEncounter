@@ -21,7 +21,7 @@ class CharacterEntryViewModel(private val characterRepository: CharacterReposito
             name = nameValue,
             maxHP = hp,
             armorClass = ac,
-            imageRes = R.drawable.zombie
+            imageRes = R.drawable.default_photo
         )
 
         viewModelScope.launch {
