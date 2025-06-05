@@ -38,6 +38,14 @@ class CharacterListViewModel(private val characterRepository: CharacterRepositor
                     imageRes = R.drawable.skeleton
                 )
             )
+            characterRepository.insertCharacter(
+                SerpCharacter(
+                    name = "Spider",
+                    maxHP = 1,
+                    armorClass = 12,
+                    imageRes = R.drawable.spider
+                )
+            )
         }
     }
 
