@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -243,7 +244,7 @@ fun EntityListCard(
                 )
             },
     ) {
-        if (!showStats) {
+        if (!showStats && !showDeleteCharacterDialog) {
             Column(
                 modifier = Modifier
                     .padding(8.dp),
@@ -263,7 +264,7 @@ fun EntityListCard(
                         .fillMaxWidth()
                 )
             }
-        } else {
+        } else if (showStats && !showDeleteCharacterDialog) {
             Column(
                 modifier = Modifier
                     .padding(8.dp)
@@ -289,6 +290,14 @@ fun EntityListCard(
             }
         }
         if (showDeleteCharacterDialog) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.detele_char),
+                tint = Color.DarkGray,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.CenterHorizontally)
+            )
             AlertDialog(
                 onDismissRequest = { showDeleteCharacterDialog = false },
                 title = {
