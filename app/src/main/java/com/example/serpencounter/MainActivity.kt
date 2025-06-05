@@ -41,13 +41,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SerpEncApp()
-
+            // TestAddCharacter()
         }
     }
 }
 
 @Composable
-fun testAddCharacter(character: SerpCharacter) {
+fun TestAddCharacter() {
     val viewModel: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
     Column {
         Spacer(Modifier.size(64.dp))

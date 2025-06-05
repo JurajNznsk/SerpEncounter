@@ -77,12 +77,9 @@ fun EntityListScreen(
                 modifier = Modifier.fillMaxSize()
             )
             Column {
-                if (!charListUiState.charList.isEmpty())
-                {
-                    EntityGrid(
-                        characters = charListUiState.charList
-                    )
-                }
+                EntityGrid(
+                    characters = charListUiState.charList
+                )
             }
         }
     }

@@ -41,6 +41,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,26 +57,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
 import com.example.serpencounter.data.SerpCharacter
+import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
+import com.example.serpencounter.ui.viewModels.EncounterViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun EncounterScreen(
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    viewModel: EncounterViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    // Round number
-    var roundNumber by remember { mutableStateOf(1) }
-
-    // Entitiy List
-    var entityList: List<EncounterListItem> by remember { mutableStateOf(listOf(
-        EncounterListItem.EntityItem(EncounterEntity("Zombie", 10, 11, 13, 10, R.drawable.zombie)),
-        EncounterListItem.EntityItem(EncounterEntity("Drbo", 10, 11, 13, 10, R.drawable.zombie)),
-        EncounterListItem.RoundItem()
-        )) }
-
     //Timer
     var timerRunning by remember { mutableStateOf(true) }
     var timeSeconds by remember { mutableStateOf(0) }
@@ -87,6 +82,9 @@ fun EncounterScreen(
         }
     }
 
+    val roundNumber by viewModel.roundNumber.collectAsState()
+    val entityList by viewModel.entityList.collectAsState()
+
     Scaffold(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
@@ -95,20 +93,8 @@ fun EncounterScreen(
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
             onPlayPauseButtonClicked = { timerRunning = it },
-            onForwardButtonClicked = {
-                if (entityList.firstOrNull() is EncounterListItem.RoundItem) {
-                    roundNumber++
-                }
-                entityList = rotateEntitiesForward(entityList)
-            },
-            onBackwardButtonClicked = {
-                if (roundNumber > 0) {
-                    if (entityList.lastOrNull() is EncounterListItem.RoundItem) {
-                        roundNumber--
-                    }
-                    entityList = rotateEntitiesBackwards(entityList)
-                }
-            }
+            onForwardButtonClicked = { viewModel.rotateForward() },
+            onBackwardButtonClicked = { viewModel.rotateBackwards() }
         ) }
     ) { innerPadding ->
         Box(modifier = Modifier
@@ -497,12 +483,6 @@ fun BottomEncBar(
     }
 }
 
-fun rotateEntitiesBackwards(list: List<EncounterListItem>): List<EncounterListItem> {
-    if (list.isEmpty())
-        return list
-    return listOf(list.last()) + list.dropLast(1)
-}
-
 @Composable
 fun PlayPauseTimerButton(
     isRunning: Boolean,
@@ -519,10 +499,4 @@ fun PlayPauseTimerButton(
                 .size(50.dp)
         )
     }
-}
-
-fun rotateEntitiesForward(list: List<EncounterListItem>): List<EncounterListItem> {
-    if (list.isEmpty())
-        return list
-    return list.drop(1) + list.first()
 }
