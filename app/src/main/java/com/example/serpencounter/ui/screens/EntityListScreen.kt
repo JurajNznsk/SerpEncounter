@@ -76,10 +76,20 @@ fun EntityListScreen(
             Column {
                 if (charListUiState.charList.isEmpty())
                 {
-                    Text(text = "Oops")
+                    // TODO: remove this text; '+' sign instead
+                    Text(
+                        text = stringResource(R.string.no_serp_chars_found),
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
                 } else {
-                    EntityGrid(charListUiState.charList)
+                    EntityGrid(
+                        characters = charListUiState.charList
+                    )
                 }
+                // TODO: add character, delete characters
             }
         }
     }
