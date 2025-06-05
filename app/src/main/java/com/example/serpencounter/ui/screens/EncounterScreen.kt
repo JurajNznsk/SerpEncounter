@@ -88,7 +88,8 @@ fun EncounterScreen(
     Scaffold(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
-            onBackButtonClicked = onBackButtonClicked
+            onBackButtonClicked = onBackButtonClicked,
+            onAddEntityButtonClicked = { viewModel.addEntityToEncounter(8) }
         ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
@@ -127,7 +128,8 @@ fun EncounterScreen(
 @Composable
 fun TopEncBar(
     timeSeconds: Int,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onAddEntityButtonClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -195,6 +197,7 @@ fun TopEncBar(
                         onClick = {
                             // TODO: add entity
                             expanded = false
+                            onAddEntityButtonClicked()
                         }
                     )
                 }
@@ -364,6 +367,7 @@ fun EntityEncCard(
                         contentDescription = stringResource(R.string.move_entity_up)
                     )
                 }
+                // Entity move down
                 IconButton(
                     onClick = onEntityMoveDown
                 ) {

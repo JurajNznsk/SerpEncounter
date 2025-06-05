@@ -21,7 +21,7 @@ object AppViewModelProvider {
         }
         // Encounter Screen View Model
         initializer<EncounterViewModel> {
-            EncounterViewModel()
+            EncounterViewModel(serpEncApplication().container.characterRepository)
         }
     }
 }

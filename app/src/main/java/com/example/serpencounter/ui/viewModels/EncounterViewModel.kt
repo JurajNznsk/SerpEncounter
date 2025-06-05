@@ -1,12 +1,18 @@
 package com.example.serpencounter.ui.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.serpencounter.data.CharacterRepository
+import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class EncounterViewModel() : ViewModel() {
+class EncounterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
     // Entity list
     private val _uiEntityList = MutableStateFlow<List<EncounterListItem>>(
         listOf(
@@ -18,6 +24,26 @@ class EncounterViewModel() : ViewModel() {
     // Round number
     private val _uiRoundNumber = MutableStateFlow(1)
     val roundNumber: StateFlow<Int> = _uiRoundNumber.asStateFlow()
+
+    // Add Entity to "encounter" from Database
+    fun addEntityToEncounter(serpCharId: Int) {
+        viewModelScope.launch {
+            val serpCharacter = characterRepository.getCharacterStream(serpCharId).firstOrNull()
+            if (serpCharacter != null)
+            {
+                val entity = EncounterEntity(
+                    name = serpCharacter.name,
+                    currentHP = serpCharacter.maxHP,
+                    maxHP = serpCharacter.maxHP,
+                    armorClass = serpCharacter.armorClass,
+                    imageRes = serpCharacter.imageRes
+                )
+                _uiEntityList.update { currentList ->
+                    currentList + EncounterListItem.EntityItem(entity)
+                }
+            }
+        }
+    }
 
     // Entity list functionality
     fun rotateForward() {
