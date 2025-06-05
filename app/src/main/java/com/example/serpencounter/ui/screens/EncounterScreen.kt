@@ -166,7 +166,7 @@ fun TopEncBar(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Settings button
+            // Options button
             var expanded by remember { mutableStateOf(false) }
             Box {
                 IconButton(

@@ -22,9 +22,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -51,19 +52,21 @@ import com.example.serpencounter.R
 import com.example.serpencounter.data.SerpCharacter
 import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.theme.OldLondonFont
+import com.example.serpencounter.ui.viewModels.CharacterEntryViewModel
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
 @Composable
 fun EntityListScreen(
     onBackButtonClicked: () -> Unit,
+    onAddCharacterClicked: () -> Unit,
     viewModel: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val charListUiState by viewModel.charactersUiState.collectAsState()
+    val serpCharacterList by viewModel.charactersUiState.collectAsState()
 
     Scaffold(
         topBar = { TopListBar(
             onBackButtonClicked = onBackButtonClicked,
-            onOptionButtonClicked = { }
+            onAddCharacterClicked = onAddCharacterClicked
         ) },
         bottomBar = { BottomListBar() }
     ) { innerPadding ->
@@ -80,7 +83,7 @@ fun EntityListScreen(
             )
             Column {
                 EntityGrid(
-                    characters = charListUiState.charList
+                    characters = serpCharacterList.charList
                 )
             }
         }
@@ -90,7 +93,7 @@ fun EntityListScreen(
 @Composable
 fun TopListBar(
     onBackButtonClicked: () -> Unit,
-    onOptionButtonClicked: () -> Unit
+    onAddCharacterClicked: () -> Unit
 ) {
     Surface(
         color = Color.Black,
@@ -131,19 +134,45 @@ fun TopListBar(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Options button: insert, delete all
-            IconButton(
-                onClick = onOptionButtonClicked,
-                modifier = Modifier
-                    .size(48.dp)
-            ) {
-                Icon (
-                    imageVector = Icons.AutoMirrored.Filled.List,
-                    contentDescription = stringResource(R.string.option_button),
-                    tint = Color.White,
-                    modifier = Modifier
-                        .size(40.dp)
-                )
+            // Options button
+            var expanded by remember { mutableStateOf(false) }
+            Box {
+                IconButton(
+                    onClick = { expanded = true }
+                ) {
+                    Icon (
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = stringResource(R.string.option_button),
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(100.dp)
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(R.string.add_character_to_db)) },
+                        onClick = {
+                            // TODO: Insert into DB
+                            expanded = false
+                            onAddCharacterClicked()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(R.string.delete_all_from_db),
+                                color = Color.Red
+                            )
+                        },
+                        onClick = {
+                            // TODO: Delete all from DB
+                            expanded = false
+                        }
+                    )
+                }
             }
         }
     }
