@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -31,6 +32,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -84,7 +86,8 @@ fun EntityListScreen(
             )
             Column {
                 EntityGrid(
-                    characters = serpCharacterList.charList
+                    characters = serpCharacterList.charList,
+                    viewModel = viewModel
                 )
             }
         }
@@ -163,7 +166,7 @@ fun TopListBar(
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.add_default)) },
+                        text = { Text(text = stringResource(R.string.add_default_to_db)) },
                         onClick = {
                             expanded = false
                             onAddDefaultCharactersClicked()
@@ -189,7 +192,8 @@ fun TopListBar(
 
 @Composable
 fun EntityGrid(
-    characters: List<SerpCharacter>
+    characters: List<SerpCharacter>,
+    viewModel: CharacterListViewModel
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -200,16 +204,21 @@ fun EntityGrid(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(characters) { character ->
-            EntityListCard(character = character)
+            EntityListCard(
+                character = character,
+                onCharacterPressed = { viewModel.deleteSerpCharacter(character) }
+            )
         }
     }
 }
 
 @Composable
 fun EntityListCard(
-    character: SerpCharacter
+    character: SerpCharacter,
+    onCharacterPressed: (SerpCharacter) -> Unit
 ) {
     var showStats by remember { mutableStateOf(false)}
+    var showDeleteCharacterDialog by remember { mutableStateOf(false) }
 
     Card(
         // onClick = { showStats = !showStats },
@@ -230,9 +239,7 @@ fun EntityListCard(
                     onTap = {
                         showStats = !showStats // short tap
                     },
-                    onLongPress = {
-                        // TODO: add onHold functionality (to delete character from database)
-                    }
+                    onLongPress = { showDeleteCharacterDialog = true }
                 )
             },
     ) {
@@ -280,6 +287,41 @@ fun EntityListCard(
                 }
                 //TODO: play with entity info
             }
+        }
+        if (showDeleteCharacterDialog) {
+            AlertDialog(
+                onDismissRequest = { showDeleteCharacterDialog = false },
+                title = {
+                    Text(
+                        text = stringResource(R.string.confirm_delete)
+                    )
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            showDeleteCharacterDialog = false
+                            onCharacterPressed(character)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.delete_one_from_db),
+                            fontSize = 15.sp,
+                            color = Color.Red
+                        )
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { showDeleteCharacterDialog = false }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.cancel_delete_one),
+                            fontSize = 15.sp,
+                            color = Color.Black
+                        )
+                    }
+                }
+            )
         }
     }
 }
