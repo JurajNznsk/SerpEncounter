@@ -30,6 +30,7 @@
     <string name="confirm_delete">Are you sure you want to delete?</string>
     <string name="delete_one_from_db">Delete</string>
     <string name="cancel_delete_one">Cancel</string>
+    <string name="hold_delete">hold to delete</string>
 
     <!-- CharacterEntry Screen -->
     <string name="create_serpChar">Create new SerpCharacter</string>

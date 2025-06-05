@@ -332,6 +332,18 @@ fun BottomListBar() {
         color = Color.Black,
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
-    ) {}
+            .height(60.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            Text(
+                text = stringResource(R.string.hold_delete),
+                color = Color.LightGray,
+                fontSize = 10.sp,
+            )
+        }
+    }
 }
