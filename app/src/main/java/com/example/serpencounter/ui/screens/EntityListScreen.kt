@@ -2,6 +2,7 @@ package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -172,7 +174,7 @@ fun EntityListCard(
     var showStats by remember { mutableStateOf(false)}
 
     Card(
-        onClick = { showStats = !showStats },
+        // onClick = { showStats = !showStats },
         colors = CardDefaults.cardColors(
             containerColor = Color.LightGray
         ),
@@ -185,6 +187,16 @@ fun EntityListCard(
                 color = Color.Black,
                 shape = RoundedCornerShape(12.dp)
             )
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = {
+                        showStats = !showStats // short tap
+                    },
+                    onLongPress = {
+                        // TODO: add onHold functionality (to delete character from database)
+                    }
+                )
+            },
     ) {
         if (!showStats) {
             Column(
