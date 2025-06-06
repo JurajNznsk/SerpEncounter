@@ -19,8 +19,8 @@ sealed class EncounterListItem {
 }
 
 enum class EntityImageResources(val imageRes: Int) {
-    Zombie(R.drawable.zombie),
-    Skeleton(R.drawable.skeleton),
-    Spider(R.drawable.spider),
-    Default(R.drawable.default_photo);
+    ZOMBIE(R.drawable.zombie),
+    SKELETON(R.drawable.skeleton),
+    SPIDER(R.drawable.spider),
+    DEFAULT(R.drawable.default_photo);
 }
