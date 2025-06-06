@@ -8,7 +8,8 @@ import com.example.serpencounter.data.serpCharacter.SerpCharacter
 import kotlinx.coroutines.launch
 
 class CharacterEntryViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    fun addSerpCharacter(name: String, maxHP: String, armorClass: String) {
+
+    fun addSerpCharacter(name: String, maxHP: String, armorClass: String, imageRes: Int) {
         val nameValue = name.trim().ifBlank { "NaN" }
         val hp = maxHP.toIntOrNull() ?: 0
         val ac = armorClass.toIntOrNull() ?: 0
@@ -17,7 +18,7 @@ class CharacterEntryViewModel(private val characterRepository: CharacterReposito
             name = nameValue,
             maxHP = hp,
             armorClass = ac,
-            imageRes = R.drawable.default_photo
+            imageRes = imageRes
         )
 
         viewModelScope.launch {

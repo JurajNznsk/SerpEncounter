@@ -70,7 +70,7 @@ fun StartScreen(
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .padding(8.dp)
-                    .height(60.dp)
+                    .height(70.dp)
                     .width(240.dp)
             ) {
                 Text(
@@ -89,7 +89,7 @@ fun StartScreen(
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .padding(8.dp)
-                    .height(60.dp)
+                    .height(70.dp)
                     .width(240.dp)
             ) {
                 Text(

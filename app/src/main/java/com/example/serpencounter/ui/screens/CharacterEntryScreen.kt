@@ -2,6 +2,7 @@ package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,11 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -38,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
 import com.example.serpencounter.ui.AppViewModelProvider
+import com.example.serpencounter.ui.info.EntityImageResources
 import com.example.serpencounter.ui.theme.OldLondonFont
 import com.example.serpencounter.ui.viewModels.CharacterEntryViewModel
 
@@ -109,6 +117,7 @@ fun CenterEntry(
     var name by remember { mutableStateOf("") }
     var maxHP by remember { mutableStateOf("") }
     var armorClass by remember { mutableStateOf("") }
+    var selectedImageRes by remember { mutableStateOf(R.drawable.default_photo) }
 
     Column(
         modifier = Modifier
@@ -197,6 +206,11 @@ fun CenterEntry(
         }
 
         // TODO: image picker
+        // Image picker
+        ImagePickerGrid(
+            onImageSelected = { selectedImageRes = it },
+            selectedImageRes = selectedImageRes
+        )
 
         Row(
             modifier = Modifier
@@ -225,7 +239,7 @@ fun CenterEntry(
             // Save Button
             Button(
                 onClick = {
-                    viewModel.addSerpCharacter(name, maxHP, armorClass)
+                    viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
                     onSaveButtonClicked()
                 },
                 shape = RoundedCornerShape(8.dp),
@@ -241,6 +255,48 @@ fun CenterEntry(
                 Text(
                     text = stringResource(R.string.save_button),
                     fontSize = 30.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ImagePickerGrid(
+    onImageSelected: (Int) -> Unit,
+    selectedImageRes: Int
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .padding(8.dp)
+    ) {
+        items(EntityImageResources.entries) { image ->
+            val isSelected = image.imageRes == selectedImageRes
+            Card(
+                onClick = { onImageSelected(image.imageRes) },
+                shape = RoundedCornerShape(8.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (isSelected) Color.LightGray else Color.DarkGray
+                ),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .size(128.dp)
+                    .border(
+                        width = if (isSelected) 3.dp else 1.dp,
+                        color = if (isSelected) Color.Black else Color.Transparent,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+            ) {
+                Image(
+                    painter = painterResource(id = image.imageRes),
+                    contentDescription = image.name,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
                 )
             }
         }

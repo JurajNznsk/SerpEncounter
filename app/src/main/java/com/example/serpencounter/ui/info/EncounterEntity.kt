@@ -18,3 +18,10 @@ sealed class EncounterListItem {
     data class EntityItem(val entity: EncounterEntity): EncounterListItem()
     data class RoundItem(val name: String = ""): EncounterListItem()
 }
+
+enum class EntityImageResources(val imageRes: Int) {
+    Zombie(R.drawable.zombie),
+    Skeleton(R.drawable.skeleton),
+    Spider(R.drawable.spider),
+    Default(R.drawable.default_photo);
+}
