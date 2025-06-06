@@ -2,6 +2,7 @@ package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -110,167 +111,6 @@ fun TopEntryBar() {
     }
 }
 
-//@Composable
-//fun CenterEntry(
-//    onSaveButtonClicked: () -> Unit,
-//    onCancelButtonClicked: () -> Unit
-//) {
-//    val viewModel: CharacterEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
-//
-//    var name by remember { mutableStateOf("") }
-//    var maxHP by remember { mutableStateOf("") }
-//    var armorClass by remember { mutableStateOf("") }
-//    var selectedImageRes by remember { mutableIntStateOf(R.drawable.default_photo) }
-//
-//    Scaffold(
-//        bottomBar = {
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = 16.dp)
-//                    .imePadding(),
-//                horizontalArrangement = Arrangement.SpaceEvenly
-//            ) {
-//                // Cancel Button
-//                Button(
-//                    onClick = { onCancelButtonClicked() },
-//                    shape = RoundedCornerShape(8.dp),
-//                    border = BorderStroke(2.dp, Color.DarkGray),
-//                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color.LightGray,
-//                        contentColor = Color.White
-//                    ),
-//                    modifier = Modifier
-//                        .width(180.dp)
-//                        .height(80.dp)
-//                ) {
-//                    Text(
-//                        text = stringResource(R.string.cancel_button),
-//                        fontSize = 30.sp
-//                    )
-//                }
-//                // Save Button
-//                Button(
-//                    onClick = {
-//                        viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
-//                        onSaveButtonClicked()
-//                    },
-//                    shape = RoundedCornerShape(8.dp),
-//                    border = BorderStroke(2.dp, Color.Black),
-//                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color.DarkGray,
-//                        contentColor = Color.White
-//                    ),
-//                    modifier = Modifier
-//                        .width(180.dp)
-//                        .height(80.dp)
-//                ) {
-//                    Text(
-//                        text = stringResource(R.string.save_button),
-//                        fontSize = 30.sp
-//                    )
-//                }
-//            }
-//        }
-//    ) {
-//        LazyColumn(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(16.dp)
-//        ) {
-//            item {
-//                Column {
-//                    // Add new name
-//                    OutlinedTextField(
-//                        value = name,
-//                        onValueChange = { name = it },
-//                        label = {
-//                            Text(
-//                                text = stringResource(R.string.name_to_add)
-//                            )
-//                        },
-//                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedTextColor = Color.Black,
-//                            unfocusedTextColor = Color.White,
-//                            focusedBorderColor = Color.Black,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            focusedLabelColor = Color.Black,
-//                            unfocusedLabelColor = Color.LightGray,
-//                            focusedContainerColor = Color.LightGray,
-//                            unfocusedContainerColor = Color.DarkGray,
-//                            cursorColor = Color.Gray
-//                        ),
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                    )
-//
-//                    Spacer(modifier = Modifier.height(8.dp))
-//
-//                    // Add new max HP
-//                    OutlinedTextField(
-//                        value = maxHP,
-//                        onValueChange = { maxHP = it },
-//                        label = {
-//                            Text(
-//                                text = stringResource(R.string.max_hp_to_add)
-//                            )
-//                        },
-//                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedTextColor = Color.Black,
-//                            unfocusedTextColor = Color.White,
-//                            focusedBorderColor = Color.Black,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            focusedLabelColor = Color.Black,
-//                            unfocusedLabelColor = Color.LightGray,
-//                            focusedContainerColor = Color.LightGray,
-//                            unfocusedContainerColor = Color.DarkGray,
-//                            cursorColor = Color.Gray
-//                        ),
-//                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                    )
-//
-//                    Spacer(modifier = Modifier.height(8.dp))
-//
-//                    // Add new Armor Class
-//                    OutlinedTextField(
-//                        value = armorClass,
-//                        onValueChange = { armorClass = it },
-//                        label = {
-//                            Text(
-//                                text = stringResource(R.string.armor_class_to_add)
-//                            )
-//                        },
-//                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedTextColor = Color.Black,
-//                            unfocusedTextColor = Color.White,
-//                            focusedBorderColor = Color.Black,
-//                            unfocusedBorderColor = Color.DarkGray,
-//                            focusedLabelColor = Color.Black,
-//                            unfocusedLabelColor = Color.LightGray,
-//                            focusedContainerColor = Color.LightGray,
-//                            unfocusedContainerColor = Color.DarkGray,
-//                            cursorColor = Color.Gray
-//                        ),
-//                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                    )
-//                }
-//            }
-//
-//            item {
-//                // Image picker
-//                ImagePickerGrid(
-//                    onImageSelected = { selectedImageRes = it },
-//                    selectedImageRes = selectedImageRes
-//                )
-//            }
-//        }
-//
-//    }
-//}
 @Composable
 fun CenterEntry(
     onSaveButtonClicked: () -> Unit,
@@ -283,57 +123,15 @@ fun CenterEntry(
     var armorClass by remember { mutableStateOf("") }
     var selectedImageRes by remember { mutableIntStateOf(R.drawable.default_photo) }
 
-    Scaffold(
-        containerColor = Color.Transparent,
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding(),
-        bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Button(
-                    onClick = onCancelButtonClicked,
-                    shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(2.dp, Color.DarkGray),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.LightGray,
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(60.dp)
-                ) {
-                    Text(text = stringResource(R.string.cancel_button), fontSize = 20.sp)
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                Button(
-                    onClick = {
-                        viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
-                        onSaveButtonClicked()
-                    },
-                    shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(2.dp, Color.Black),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.DarkGray,
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(60.dp)
-                ) {
-                    Text(text = stringResource(R.string.save_button), fontSize = 20.sp)
-                }
-            }
-        }
-    ) { innerPadding ->
+            .background(Color.Transparent)
+    ) {
         LazyColumn(
-            contentPadding = innerPadding,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(bottom = 100.dp)
         ) {
             item {
                 // Add new name
@@ -358,11 +156,8 @@ fun CenterEntry(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 16.dp)
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
                 // Add new max HP
                 OutlinedTextField(
                     value = maxHP,
@@ -386,11 +181,8 @@ fun CenterEntry(
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
                 // Add new Armor Class
                 OutlinedTextField(
                     value = armorClass,
@@ -414,7 +206,7 @@ fun CenterEntry(
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 )
             }
             item {
@@ -422,6 +214,48 @@ fun CenterEntry(
                     onImageSelected = { selectedImageRes = it },
                     selectedImageRes = selectedImageRes
                 )
+            }
+        }
+        // Floating Buttons
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .imePadding()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(
+                onClick = onCancelButtonClicked,
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(2.dp, Color.DarkGray),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(60.dp)
+            ) {
+                Text(text = stringResource(R.string.cancel_button), fontSize = 20.sp)
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Button(
+                onClick = {
+                    viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
+                    onSaveButtonClicked()
+                },
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(2.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.DarkGray,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(60.dp)
+            ) {
+                Text(text = stringResource(R.string.save_button), fontSize = 20.sp)
             }
         }
     }
