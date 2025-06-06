@@ -28,7 +28,8 @@ import com.example.serpencounter.ui.theme.OldLondonFont
 @Composable
 fun StartScreen(
     onEncounterButtonClicked: () -> Unit,
-    onListButtonClicked: () -> Unit
+    onListButtonClicked: () -> Unit,
+    onExitButtonClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -94,6 +95,25 @@ fun StartScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.entity_list_button),
+                    fontSize = 23.sp
+                )
+            }
+            // Exit button
+            OutlinedButton(
+                onClick = onExitButtonClicked,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.DarkGray
+                ),
+                border = BorderStroke(2.dp, Color.DarkGray),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(70.dp)
+                    .width(240.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.exit_app_button),
                     fontSize = 23.sp
                 )
             }

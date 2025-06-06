@@ -62,4 +62,6 @@ class CharacterListViewModel(private val characterRepository: CharacterRepositor
     }
 }
 
-data class CharactersUiState(val charList: List<SerpCharacter> = listOf())
+data class CharactersUiState(
+    val charList: List<SerpCharacter> = listOf()
+)

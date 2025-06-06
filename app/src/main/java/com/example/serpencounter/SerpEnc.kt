@@ -11,6 +11,7 @@ import com.example.serpencounter.ui.screens.CharacterEntryScreen
 import com.example.serpencounter.ui.screens.EncounterScreen
 import com.example.serpencounter.ui.screens.EntityListScreen
 import com.example.serpencounter.ui.screens.StartScreen
+import kotlin.system.exitProcess
 
 enum class SerpEncScreens {
     Start,
@@ -32,7 +33,8 @@ fun SerpEncApp(
         composable(route = SerpEncScreens.Start.name) {
             StartScreen(
                 onEncounterButtonClicked = { navController.navigate(SerpEncScreens.Encounter.name) },
-                onListButtonClicked = { navController.navigate(SerpEncScreens.List.name) }
+                onListButtonClicked = { navController.navigate(SerpEncScreens.List.name) },
+                onExitButtonClicked = { exitProcess(0) }
             )
         }
         composable(route = SerpEncScreens.Encounter.name) {
