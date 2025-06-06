@@ -1,10 +1,9 @@
 package com.example.serpencounter.ui.info
 
 import com.example.serpencounter.R
-import java.util.UUID
 
 data class EncounterEntity(
-    val randomID: String = UUID.randomUUID().toString(),
+    val entityId: Int,
     val name: String,
     val currentHP: Int,
     val maxHP: Int,

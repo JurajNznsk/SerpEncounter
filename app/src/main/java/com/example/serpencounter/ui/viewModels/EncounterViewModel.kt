@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,44 +22,28 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
     )
     val entityList: StateFlow<List<EncounterListItem>> = _uiEntityList.asStateFlow()
 
+    // Sequence number for entityId
+    private var _sequenceNum:Int = 1
+
     // RoundNumber state
     private val _uiRoundNumber = MutableStateFlow(1)
     val roundNumber: StateFlow<Int> = _uiRoundNumber.asStateFlow()
 
-    // Add SerpCharacter as Entity to "encounter" from Database
-    fun addEntityToEncounter(serpCharId: Int) {
-        viewModelScope.launch {
-            val serpCharacter = characterRepository.getCharacterStream(serpCharId).firstOrNull()
-            if (serpCharacter != null)
-            {
-                val entity = EncounterEntity(
-                    name = serpCharacter.name,
-                    currentHP = serpCharacter.maxHP,
-                    maxHP = serpCharacter.maxHP,
-                    armorClass = serpCharacter.armorClass,
-                    imageRes = serpCharacter.imageRes
-                )
-                _uiEntityList.update { currentList ->
-                    currentList + EncounterListItem.EntityItem(entity)
-                }
-            }
-        }
-    }
-
     // Timer state
     private val _isTimerRunning = MutableStateFlow(true)
-    val isTimerRunning: StateFlow<Boolean> = _isTimerRunning.asStateFlow()
 
+    val isTimerRunning: StateFlow<Boolean> = _isTimerRunning.asStateFlow()
+    // Timer -> seconds
     private val _timeSeconds = MutableStateFlow(0)
     val timeSeconds: StateFlow<Int> = _timeSeconds.asStateFlow()
-
     // Timer logic
     init {
         startTimer()
     }
-    fun startTimer() {
+
+    private fun startTimer() {
         viewModelScope.launch {
-            _isTimerRunning.collect() { isRunning ->
+            _isTimerRunning.collect { isRunning ->
                 if (isRunning) {
                     while (_isTimerRunning.value) {
                         delay(1000L)
@@ -77,12 +60,33 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         _timeSeconds.value = 0
     }
 
+    // Add SerpCharacter as Entity to "encounter" from Database
+    fun addEntityToEncounter(serpCharId: Int) {
+        viewModelScope.launch {
+            val serpCharacter = characterRepository.getCharacterStream(serpCharId).firstOrNull()
+            if (serpCharacter != null)
+            {
+                val entity = EncounterEntity(
+                    entityId = _sequenceNum,
+                    name = serpCharacter.name,
+                    currentHP = serpCharacter.maxHP,
+                    maxHP = serpCharacter.maxHP,
+                    armorClass = serpCharacter.armorClass,
+                    imageRes = serpCharacter.imageRes
+                )
+                _sequenceNum++
+                _uiEntityList.update { currentList ->
+                    currentList + EncounterListItem.EntityItem(entity)
+                }
+            }
+        }
+    }
 
     // Updating stats of EncounterEntities
     fun updateEntity(entity: EncounterEntity) {
         _uiEntityList.update { currentList ->
             currentList.map { item ->
-                if (item is EncounterListItem.EntityItem && item.entity.randomID == entity.randomID) {
+                if (item is EncounterListItem.EntityItem && item.entity.entityId == entity.entityId) {
                     item.copy(entity = entity)
                 } else {
                     item

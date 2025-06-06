@@ -30,6 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -117,7 +118,7 @@ fun CenterEntry(
     var name by remember { mutableStateOf("") }
     var maxHP by remember { mutableStateOf("") }
     var armorClass by remember { mutableStateOf("") }
-    var selectedImageRes by remember { mutableStateOf(R.drawable.default_photo) }
+    var selectedImageRes by remember { mutableIntStateOf(R.drawable.default_photo) }
 
     Column(
         modifier = Modifier

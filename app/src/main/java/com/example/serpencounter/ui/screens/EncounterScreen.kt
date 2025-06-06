@@ -40,10 +40,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,7 +66,6 @@ import com.example.serpencounter.ui.info.EncounterListItem
 import com.example.serpencounter.ui.info.getEffectIcon
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 import com.example.serpencounter.ui.viewModels.EncounterViewModel
-import kotlinx.coroutines.delay
 
 @Composable
 fun EncounterScreen(
@@ -385,6 +382,15 @@ fun EntityEncCard(
                     Text(
                         text = entity.name,
                         fontSize = 25.sp
+                    )
+                    // Sequence number
+                    Text(
+                        text = "#${entity.entityId}",
+                        fontSize = 15.sp,
+                        color = Color.White,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 8.dp)
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     // List of effects (images)
