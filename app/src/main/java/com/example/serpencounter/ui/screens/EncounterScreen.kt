@@ -75,29 +75,20 @@ fun EncounterScreen(
     onBackButtonClicked: () -> Unit,
     viewModel: EncounterViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    //Timer
-    var timerRunning by remember { mutableStateOf(true) }
-    var timeSeconds by remember { mutableIntStateOf(0) }
-    // Timer Logic; starts coroutine - timer runs only when isRunning
-    LaunchedEffect(timerRunning) {
-        while (timerRunning) {
-            delay(1000L)
-            timeSeconds++
-        }
-    }
-
     val roundNumber by viewModel.roundNumber.collectAsState()
     val entityList by viewModel.entityList.collectAsState()
+    val timeSeconds by viewModel.timeSeconds.collectAsState()
+    val timerRunning by viewModel.isTimerRunning.collectAsState()
 
     Scaffold(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
             onBackButtonClicked = onBackButtonClicked,
-            onResetTimerClicked = { timeSeconds = 0 }
+            onResetTimerClicked = { viewModel.resetTimer() }
         ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
-            onPlayPauseButtonClicked = { timerRunning = it },
+            onPlayPauseButtonClicked = { viewModel.toggleTimer() },
             onForwardButtonClicked = { viewModel.rotateForward() },
             onBackwardButtonClicked = { viewModel.rotateBackwards() }
         ) }

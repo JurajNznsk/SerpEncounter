@@ -5,15 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.serpencounter.data.serpCharacter.CharacterRepository
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class EncounterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    // Entity list
+    // EntityList state
     private val _uiEntityList = MutableStateFlow<List<EncounterListItem>>(
         listOf(
             EncounterListItem.RoundItem()
@@ -21,11 +23,11 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
     )
     val entityList: StateFlow<List<EncounterListItem>> = _uiEntityList.asStateFlow()
 
-    // Round number
+    // RoundNumber state
     private val _uiRoundNumber = MutableStateFlow(1)
     val roundNumber: StateFlow<Int> = _uiRoundNumber.asStateFlow()
 
-    // Add Entity to "encounter" from Database
+    // Add SerpCharacter as Entity to "encounter" from Database
     fun addEntityToEncounter(serpCharId: Int) {
         viewModelScope.launch {
             val serpCharacter = characterRepository.getCharacterStream(serpCharId).firstOrNull()
@@ -45,6 +47,38 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         }
     }
 
+    // Timer state
+    private val _isTimerRunning = MutableStateFlow(true)
+    val isTimerRunning: StateFlow<Boolean> = _isTimerRunning.asStateFlow()
+
+    private val _timeSeconds = MutableStateFlow(0)
+    val timeSeconds: StateFlow<Int> = _timeSeconds.asStateFlow()
+
+    // Timer logic
+    init {
+        startTimer()
+    }
+    fun startTimer() {
+        viewModelScope.launch {
+            _isTimerRunning.collect() { isRunning ->
+                if (isRunning) {
+                    while (_isTimerRunning.value) {
+                        delay(1000L)
+                        _timeSeconds.update { it + 1 }
+                    }
+                }
+            }
+        }
+    }
+    fun toggleTimer() {
+        _isTimerRunning.value = !_isTimerRunning.value
+    }
+    fun resetTimer() {
+        _timeSeconds.value = 0
+    }
+
+
+    // Updating stats of EncounterEntities
     fun updateEntity(entity: EncounterEntity) {
         _uiEntityList.update { currentList ->
             currentList.map { item ->
