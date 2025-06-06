@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -44,6 +45,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -61,6 +63,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.serpencounter.R
 import com.example.serpencounter.ui.AppViewModelProvider
+import com.example.serpencounter.ui.info.Effect
 import com.example.serpencounter.ui.info.EffectType
 import com.example.serpencounter.ui.info.EncounterEntity
 import com.example.serpencounter.ui.info.EncounterListItem
@@ -490,6 +493,7 @@ fun EditEntityDialog(
 ) {
     var hp by remember { mutableStateOf(entity.currentHP.toString()) }
     var ac by remember { mutableStateOf(entity.armorClass.toString()) }
+    var tempEffects = remember { mutableStateListOf(*entity.effects.toTypedArray()) }
 
     Dialog(
         onDismissRequest = onDismiss
@@ -543,19 +547,36 @@ fun EditEntityDialog(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     EffectType.entries.forEach { effect ->
-                        Image(
-                            painter = painterResource(id = getEffectIcon(effect)),
-                            contentDescription = stringResource(effect.nameId),
-                            modifier = Modifier
-                                .size(48.dp)
-                                .padding(top = 8.dp)
-                                .pointerInput(effect) {
-                                    detectTapGestures {
-                                        entity.toggleEffect(effect.name)
-                                    }
-                                }
-                        )
+                        var isSelected = tempEffects.any {it.name == effect.name}
 
+                        IconButton(
+                            onClick = {
+                                val existing = tempEffects.find { it.name == effect.name }
+                                if (existing != null) {
+                                    tempEffects.remove(existing)
+                                } else {
+                                    tempEffects.add(Effect(effect.name, getEffectIcon(effect)))
+                                }
+                            }
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .border(
+                                        width = 2.dp,
+                                        color = if (isSelected) Color.Black else Color.Transparent,
+                                        shape = CircleShape
+                                    )
+                                    .padding(4.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = getEffectIcon(effect)),
+                                    contentDescription = stringResource(effect.nameId),
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                        }
                     }
                 }
 
@@ -579,7 +600,8 @@ fun EditEntityDialog(
                         onClick = {
                             val updatedEntity = entity.copy(
                                 currentHP = hp.toIntOrNull() ?: entity.currentHP,
-                                armorClass = ac.toIntOrNull() ?: entity.armorClass
+                                armorClass = ac.toIntOrNull() ?: entity.armorClass,
+                                effects = tempEffects.toList()
                             )
                             onConfirm(updatedEntity)
                             onDismiss()
