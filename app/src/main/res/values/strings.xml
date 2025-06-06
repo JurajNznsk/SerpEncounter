@@ -49,6 +49,10 @@
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
 
+    <!-- Effect -->
+    <string name="effect_poison">Poison</string>
+    <string name="effect_fire">Fire</string>
+    <string name="effect_slow">Slow</string>
 
     <string name="current_name">Name</string>
     <string name="current_hp">Current HP</string>
