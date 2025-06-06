@@ -28,8 +28,7 @@ import com.example.serpencounter.ui.theme.OldLondonFont
 @Composable
 fun StartScreen(
     onEncounterButtonClicked: () -> Unit,
-    onListButtonClicked: () -> Unit,
-    onSavedButtonClicked: () -> Unit
+    onListButtonClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -95,25 +94,6 @@ fun StartScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.entity_list_button),
-                    fontSize = 23.sp
-                )
-            }
-            // Saved Enc button
-            OutlinedButton(
-                onClick = onSavedButtonClicked,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Black,
-                    contentColor = Color.White
-                ),
-                border = BorderStroke(2.dp, Color.Black),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(60.dp)
-                    .width(240.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.saved_encounters_button),
                     fontSize = 23.sp
                 )
             }

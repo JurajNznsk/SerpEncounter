@@ -2,7 +2,6 @@ package com.example.serpencounter.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,7 +51,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -195,13 +193,6 @@ fun TopEncBar(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.reset_timer)) },
                         onClick = onResetTimerClicked
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.save_encounter)) },
-                        onClick = {
-                            // TODO: Save encounter (into saved encounters)
-                            expanded = false
-                        }
                     )
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.add_entity)) },

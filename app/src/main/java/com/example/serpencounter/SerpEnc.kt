@@ -10,15 +10,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.serpencounter.ui.screens.CharacterEntryScreen
 import com.example.serpencounter.ui.screens.EncounterScreen
 import com.example.serpencounter.ui.screens.EntityListScreen
-import com.example.serpencounter.ui.screens.SavedEncounterScreen
 import com.example.serpencounter.ui.screens.StartScreen
 
 enum class SerpEncScreens {
     Start,
     Encounter,
     List,
-    AddCharacter,
-    Saved;
+    AddCharacter;
 }
 
 @Composable
@@ -34,8 +32,7 @@ fun SerpEncApp(
         composable(route = SerpEncScreens.Start.name) {
             StartScreen(
                 onEncounterButtonClicked = { navController.navigate(SerpEncScreens.Encounter.name) },
-                onListButtonClicked = { navController.navigate(SerpEncScreens.List.name) },
-                onSavedButtonClicked = { navController.navigate(SerpEncScreens.Saved.name) }
+                onListButtonClicked = { navController.navigate(SerpEncScreens.List.name) }
             )
         }
         composable(route = SerpEncScreens.Encounter.name) {
@@ -53,11 +50,6 @@ fun SerpEncApp(
             CharacterEntryScreen(
                 onSaveButtonClicked = { navController.popBackStack() },
                 onCancelButtonClicked = { navController.popBackStack() }
-            )
-        }
-        composable(route = SerpEncScreens.Saved.name) {
-            SavedEncounterScreen(
-                onBackButtonClicked = { navController.popBackStack() }
             )
         }
     }
