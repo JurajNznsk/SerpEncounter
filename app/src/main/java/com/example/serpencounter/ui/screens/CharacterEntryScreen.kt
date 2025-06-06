@@ -205,7 +205,6 @@ fun CenterEntry(
             )
         }
 
-        // TODO: image picker
         // Image picker
         ImagePickerGrid(
             onImageSelected = { selectedImageRes = it },
