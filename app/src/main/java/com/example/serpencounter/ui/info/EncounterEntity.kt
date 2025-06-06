@@ -19,8 +19,18 @@ sealed class EncounterListItem {
 }
 
 enum class EntityImageResources(val imageRes: Int) {
+    BARBARIAN(R.drawable.barbarian),
+    BARD(R.drawable.bard),
+    CLERIC(R.drawable.cleric),
+    DRUID(R.drawable.druid),
+    RANGER(R.drawable.ranger),
+    ROGUE(R.drawable.rogue),
+    WARLOCK(R.drawable.warlock),
+    WIZARD(R.drawable.wizard),
     ZOMBIE(R.drawable.zombie),
     SKELETON(R.drawable.skeleton),
     SPIDER(R.drawable.spider),
+    APE(R.drawable.ape),
+    SNAKE(R.drawable.snake),
     DEFAULT(R.drawable.default_photo);
 }

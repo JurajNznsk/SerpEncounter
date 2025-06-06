@@ -55,7 +55,7 @@ fun StartScreen(
             Text (
                 text = stringResource(id = R.string.encounter),
                 fontFamily = OldLondonFont,
-                fontSize = 120.sp
+                fontSize = 100.sp
             )
 
             Spacer(modifier = Modifier.height(200.dp)) // Spacing between "logo" and buttons

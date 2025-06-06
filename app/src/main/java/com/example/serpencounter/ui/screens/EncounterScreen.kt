@@ -67,6 +67,8 @@ import com.example.serpencounter.ui.info.getEffectIcon
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 import com.example.serpencounter.ui.viewModels.EncounterViewModel
 
+// TODO: delete entity from fight
+
 @Composable
 fun EncounterScreen(
     onBackButtonClicked: () -> Unit,
@@ -483,6 +485,7 @@ fun EditEntityDialog(
     var ac by remember { mutableStateOf(entity.armorClass.toString()) }
     val tempEffects = remember { mutableStateListOf(*entity.effects.toTypedArray()) } // * - unpacks list of effect into separate Effect-s
 
+    // Edit entity
     Dialog(
         onDismissRequest = onDismiss
     ) {

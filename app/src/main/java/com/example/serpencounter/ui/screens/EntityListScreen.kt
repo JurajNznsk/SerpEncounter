@@ -318,7 +318,6 @@ fun EntityListCard(
                         )
                     }
                 }
-                //TODO: play with entity info
             }
         }
         if (showDeleteCharacterDialog) {
