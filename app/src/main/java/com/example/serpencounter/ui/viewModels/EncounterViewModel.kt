@@ -81,6 +81,16 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
             }
         }
     }
+    // Delete entity from encounter
+    fun deleteEntity(entity: EncounterEntity) {
+        viewModelScope.launch {
+            _uiEntityList.update { currentList ->
+                currentList.filterNot {
+                    it is EncounterListItem.EntityItem && it.entity == entity
+                }
+            }
+        }
+    }
 
     // Updating stats of EncounterEntities
     fun updateEntity(entity: EncounterEntity) {

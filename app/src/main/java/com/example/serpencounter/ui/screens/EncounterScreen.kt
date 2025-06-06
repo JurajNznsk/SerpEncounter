@@ -470,7 +470,8 @@ fun EntityEncCard(
         EditEntityDialog(
             entity = entity,
             onDismiss = { showDialog = false },
-            onConfirm = viewModel::updateEntity
+            onConfirm = viewModel::updateEntity,
+            onDelete = { viewModel.deleteEntity(entity) }
         )
     }
 }
@@ -479,7 +480,8 @@ fun EntityEncCard(
 fun EditEntityDialog(
     entity: EncounterEntity,
     onDismiss: () -> Unit,
-    onConfirm: (EncounterEntity) -> Unit
+    onConfirm: (EncounterEntity) -> Unit,
+    onDelete: (EncounterEntity) -> Unit
 ) {
     var hp by remember { mutableStateOf(entity.currentHP.toString()) }
     var ac by remember { mutableStateOf(entity.armorClass.toString()) }
@@ -524,7 +526,7 @@ fun EditEntityDialog(
                     onValueChange = { ac = it.filter { char -> char.isDigit() } },
                     label = {
                         Text(
-                            text = stringResource(R.string.edit_ac)
+                            text = stringResource(id = R.string.edit_ac)
                         )
                     },
                     modifier = Modifier
@@ -578,10 +580,14 @@ fun EditEntityDialog(
                         .fillMaxWidth()
                 ) {
                     TextButton(
-                        onClick = onDismiss
+                        onClick = {
+                            onDismiss()
+                            onDelete(entity)
+                        }
                     ) {
                         Text(
-                            text = stringResource(R.string.edit_cancel)
+                            text = stringResource(id = R.string.edit_delete),
+                            color = Color.Red
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))

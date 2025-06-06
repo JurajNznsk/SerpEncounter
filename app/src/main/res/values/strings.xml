@@ -27,7 +27,7 @@
     <string name="edit_hp">HP</string>
     <string name="edit_ac">AC</string>
     <string name="edit_save">Save</string>
-    <string name="edit_cancel">Cancel</string>
+    <string name="edit_delete">Delete</string>
 
     <!-- EntityList Screen -->
     <string name="add_character_to_db">Add SerpCharacter</string>
