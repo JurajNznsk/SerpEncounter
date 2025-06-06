@@ -334,7 +334,6 @@ fun CenterEntry(
             contentPadding = innerPadding,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
             item {
                 // Add new name
@@ -343,7 +342,7 @@ fun CenterEntry(
                     onValueChange = { name = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.name_to_add)
+                            text = stringResource(id = R.string.name_to_add)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
@@ -359,6 +358,7 @@ fun CenterEntry(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(16.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -369,7 +369,7 @@ fun CenterEntry(
                     onValueChange = { maxHP = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.max_hp_to_add)
+                            text = stringResource(id = R.string.max_hp_to_add)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
@@ -386,6 +386,7 @@ fun CenterEntry(
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(16.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -396,7 +397,7 @@ fun CenterEntry(
                     onValueChange = { armorClass = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.armor_class_to_add)
+                            text = stringResource(id = R.string.armor_class_to_add)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
@@ -413,6 +414,7 @@ fun CenterEntry(
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(16.dp)
                 )
             }
             item {
