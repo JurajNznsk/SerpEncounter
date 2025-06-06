@@ -270,7 +270,7 @@ fun ImagePickerGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .height(550.dp)
             .padding(8.dp)
     ) {
         items(EntityImageResources.entries) { image ->
