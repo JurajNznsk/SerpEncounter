@@ -493,7 +493,7 @@ fun EditEntityDialog(
 ) {
     var hp by remember { mutableStateOf(entity.currentHP.toString()) }
     var ac by remember { mutableStateOf(entity.armorClass.toString()) }
-    var tempEffects = remember { mutableStateListOf(*entity.effects.toTypedArray()) }
+    val tempEffects = remember { mutableStateListOf(*entity.effects.toTypedArray()) } // * - unpacks list of effect into separate Effect-s
 
     Dialog(
         onDismissRequest = onDismiss
@@ -540,14 +540,13 @@ fun EditEntityDialog(
                         .fillMaxWidth()
                 )
 
-                // TODO: add effects
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     EffectType.entries.forEach { effect ->
-                        var isSelected = tempEffects.any {it.name == effect.name}
+                        val isSelected = tempEffects.any {it.name == effect.name}
 
                         IconButton(
                             onClick = {
