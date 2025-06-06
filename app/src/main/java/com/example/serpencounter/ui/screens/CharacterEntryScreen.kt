@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -108,6 +110,167 @@ fun TopEntryBar() {
     }
 }
 
+//@Composable
+//fun CenterEntry(
+//    onSaveButtonClicked: () -> Unit,
+//    onCancelButtonClicked: () -> Unit
+//) {
+//    val viewModel: CharacterEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+//
+//    var name by remember { mutableStateOf("") }
+//    var maxHP by remember { mutableStateOf("") }
+//    var armorClass by remember { mutableStateOf("") }
+//    var selectedImageRes by remember { mutableIntStateOf(R.drawable.default_photo) }
+//
+//    Scaffold(
+//        bottomBar = {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 16.dp)
+//                    .imePadding(),
+//                horizontalArrangement = Arrangement.SpaceEvenly
+//            ) {
+//                // Cancel Button
+//                Button(
+//                    onClick = { onCancelButtonClicked() },
+//                    shape = RoundedCornerShape(8.dp),
+//                    border = BorderStroke(2.dp, Color.DarkGray),
+//                    colors = ButtonDefaults.buttonColors(
+//                        containerColor = Color.LightGray,
+//                        contentColor = Color.White
+//                    ),
+//                    modifier = Modifier
+//                        .width(180.dp)
+//                        .height(80.dp)
+//                ) {
+//                    Text(
+//                        text = stringResource(R.string.cancel_button),
+//                        fontSize = 30.sp
+//                    )
+//                }
+//                // Save Button
+//                Button(
+//                    onClick = {
+//                        viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
+//                        onSaveButtonClicked()
+//                    },
+//                    shape = RoundedCornerShape(8.dp),
+//                    border = BorderStroke(2.dp, Color.Black),
+//                    colors = ButtonDefaults.buttonColors(
+//                        containerColor = Color.DarkGray,
+//                        contentColor = Color.White
+//                    ),
+//                    modifier = Modifier
+//                        .width(180.dp)
+//                        .height(80.dp)
+//                ) {
+//                    Text(
+//                        text = stringResource(R.string.save_button),
+//                        fontSize = 30.sp
+//                    )
+//                }
+//            }
+//        }
+//    ) {
+//        LazyColumn(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(16.dp)
+//        ) {
+//            item {
+//                Column {
+//                    // Add new name
+//                    OutlinedTextField(
+//                        value = name,
+//                        onValueChange = { name = it },
+//                        label = {
+//                            Text(
+//                                text = stringResource(R.string.name_to_add)
+//                            )
+//                        },
+//                        colors = OutlinedTextFieldDefaults.colors(
+//                            focusedTextColor = Color.Black,
+//                            unfocusedTextColor = Color.White,
+//                            focusedBorderColor = Color.Black,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            focusedLabelColor = Color.Black,
+//                            unfocusedLabelColor = Color.LightGray,
+//                            focusedContainerColor = Color.LightGray,
+//                            unfocusedContainerColor = Color.DarkGray,
+//                            cursorColor = Color.Gray
+//                        ),
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                    )
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    // Add new max HP
+//                    OutlinedTextField(
+//                        value = maxHP,
+//                        onValueChange = { maxHP = it },
+//                        label = {
+//                            Text(
+//                                text = stringResource(R.string.max_hp_to_add)
+//                            )
+//                        },
+//                        colors = OutlinedTextFieldDefaults.colors(
+//                            focusedTextColor = Color.Black,
+//                            unfocusedTextColor = Color.White,
+//                            focusedBorderColor = Color.Black,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            focusedLabelColor = Color.Black,
+//                            unfocusedLabelColor = Color.LightGray,
+//                            focusedContainerColor = Color.LightGray,
+//                            unfocusedContainerColor = Color.DarkGray,
+//                            cursorColor = Color.Gray
+//                        ),
+//                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                    )
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    // Add new Armor Class
+//                    OutlinedTextField(
+//                        value = armorClass,
+//                        onValueChange = { armorClass = it },
+//                        label = {
+//                            Text(
+//                                text = stringResource(R.string.armor_class_to_add)
+//                            )
+//                        },
+//                        colors = OutlinedTextFieldDefaults.colors(
+//                            focusedTextColor = Color.Black,
+//                            unfocusedTextColor = Color.White,
+//                            focusedBorderColor = Color.Black,
+//                            unfocusedBorderColor = Color.DarkGray,
+//                            focusedLabelColor = Color.Black,
+//                            unfocusedLabelColor = Color.LightGray,
+//                            focusedContainerColor = Color.LightGray,
+//                            unfocusedContainerColor = Color.DarkGray,
+//                            cursorColor = Color.Gray
+//                        ),
+//                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                    )
+//                }
+//            }
+//
+//            item {
+//                // Image picker
+//                ImagePickerGrid(
+//                    onImageSelected = { selectedImageRes = it },
+//                    selectedImageRes = selectedImageRes
+//                )
+//            }
+//        }
+//
+//    }
+//}
 @Composable
 fun CenterEntry(
     onSaveButtonClicked: () -> Unit,
@@ -120,141 +283,142 @@ fun CenterEntry(
     var armorClass by remember { mutableStateOf("") }
     var selectedImageRes by remember { mutableIntStateOf(R.drawable.default_photo) }
 
-    Column(
+    Scaffold(
+        containerColor = Color.Transparent,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column {
-            // Add new name
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = {
-                    Text(
-                        text = stringResource(R.string.name_to_add)
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.DarkGray,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.DarkGray,
-                    cursorColor = Color.Gray
-                ),
+            .imePadding(),
+        bottomBar = {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Add new max HP
-            OutlinedTextField(
-                value = maxHP,
-                onValueChange = { maxHP = it },
-                label = {
-                    Text(
-                        text = stringResource(R.string.max_hp_to_add)
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.DarkGray,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.DarkGray,
-                    cursorColor = Color.Gray
-                ),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Add new Armor Class
-            OutlinedTextField(
-                value = armorClass,
-                onValueChange = { armorClass = it },
-                label = {
-                    Text(
-                        text = stringResource(R.string.armor_class_to_add)
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.DarkGray,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.DarkGray,
-                    cursorColor = Color.Gray
-                ),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
-
-        // Image picker
-        ImagePickerGrid(
-            onImageSelected = { selectedImageRes = it },
-            selectedImageRes = selectedImageRes
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            // Cancel Button
-            Button(
-                onClick = { onCancelButtonClicked() },
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(2.dp, Color.DarkGray),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.LightGray,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier
-                    .width(180.dp)
-                    .height(80.dp)
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(
-                    text = stringResource(R.string.cancel_button),
-                    fontSize = 30.sp
+                Button(
+                    onClick = onCancelButtonClicked,
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(2.dp, Color.DarkGray),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.LightGray,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(60.dp)
+                ) {
+                    Text(text = stringResource(R.string.cancel_button), fontSize = 20.sp)
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(
+                    onClick = {
+                        viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
+                        onSaveButtonClicked()
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(2.dp, Color.Black),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.DarkGray,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(60.dp)
+                ) {
+                    Text(text = stringResource(R.string.save_button), fontSize = 20.sp)
+                }
+            }
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            contentPadding = innerPadding,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            item {
+                // Add new name
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.name_to_add)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.DarkGray,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        focusedContainerColor = Color.LightGray,
+                        unfocusedContainerColor = Color.DarkGray,
+                        cursorColor = Color.Gray
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Add new max HP
+                OutlinedTextField(
+                    value = maxHP,
+                    onValueChange = { maxHP = it },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.max_hp_to_add)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.DarkGray,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        focusedContainerColor = Color.LightGray,
+                        unfocusedContainerColor = Color.DarkGray,
+                        cursorColor = Color.Gray
+                    ),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Add new Armor Class
+                OutlinedTextField(
+                    value = armorClass,
+                    onValueChange = { armorClass = it },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.armor_class_to_add)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.DarkGray,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        focusedContainerColor = Color.LightGray,
+                        unfocusedContainerColor = Color.DarkGray,
+                        cursorColor = Color.Gray
+                    ),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
             }
-            // Save Button
-            Button(
-                onClick = {
-                    viewModel.addSerpCharacter(name, maxHP, armorClass, selectedImageRes)
-                    onSaveButtonClicked()
-                },
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(2.dp, Color.Black),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.DarkGray,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier
-                    .width(180.dp)
-                    .height(80.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.save_button),
-                    fontSize = 30.sp
+            item {
+                ImagePickerGrid(
+                    onImageSelected = { selectedImageRes = it },
+                    selectedImageRes = selectedImageRes
                 )
             }
         }
