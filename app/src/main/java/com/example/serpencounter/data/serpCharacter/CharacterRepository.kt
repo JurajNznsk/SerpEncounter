@@ -1,4 +1,4 @@
-package com.example.serpencounter.data
+package com.example.serpencounter.data.serpCharacter
 
 import kotlinx.coroutines.flow.Flow
 

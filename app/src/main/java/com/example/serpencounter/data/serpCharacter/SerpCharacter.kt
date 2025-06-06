@@ -1,4 +1,4 @@
-package com.example.serpencounter.data
+package com.example.serpencounter.data.serpCharacter
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

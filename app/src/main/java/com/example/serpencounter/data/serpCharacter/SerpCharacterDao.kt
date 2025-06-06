@@ -1,4 +1,4 @@
-package com.example.serpencounter.data
+package com.example.serpencounter.data.serpCharacter
 
 import androidx.room.Dao
 import androidx.room.Delete

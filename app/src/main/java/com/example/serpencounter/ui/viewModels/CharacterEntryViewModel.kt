@@ -3,8 +3,8 @@ package com.example.serpencounter.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.serpencounter.R
-import com.example.serpencounter.data.CharacterRepository
-import com.example.serpencounter.data.SerpCharacter
+import com.example.serpencounter.data.serpCharacter.CharacterRepository
+import com.example.serpencounter.data.serpCharacter.SerpCharacter
 import kotlinx.coroutines.launch
 
 class CharacterEntryViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
