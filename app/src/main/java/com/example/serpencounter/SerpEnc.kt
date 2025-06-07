@@ -13,6 +13,9 @@ import com.example.serpencounter.ui.screens.EntityListScreen
 import com.example.serpencounter.ui.screens.StartScreen
 import kotlin.system.exitProcess
 
+/**
+ * Enum, ktorý predstavuje všetky obrazovky aplikácie SerpEncounter.
+ */
 enum class SerpEncScreens {
     Start,
     Encounter,
@@ -20,6 +23,11 @@ enum class SerpEncScreens {
     AddCharacter;
 }
 
+/**
+ * Hlavná composable funkcia aplikácie.
+ *
+ * @param navController Navigačný kontroler používaný na prepínanie medzi obrazovkami. Predvolená hodnota = [rememberNavController]
+ */
 @Composable
 fun SerpEncApp(
     navController: NavHostController = rememberNavController()

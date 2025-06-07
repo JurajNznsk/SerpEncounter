@@ -536,7 +536,6 @@ fun EntityEncCard(
  * @param onConfirm Uloženie zmenených informácií entite
  * @param onDelete Vymazanie entity z encounteru
  */
-// TODO: odstránenie z encounteru ak 0 HP
 @Composable
 fun EditEntityDialog(
     entity: EncounterEntity,
