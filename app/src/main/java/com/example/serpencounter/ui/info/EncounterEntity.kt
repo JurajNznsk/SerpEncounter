@@ -2,6 +2,17 @@ package com.example.serpencounter.ui.info
 
 import com.example.serpencounter.R
 
+/**
+ * Dátová trieda, ktorá reprezentuje Entitu pre encounter.
+ *
+ * @property entityId Jedinečný identifikátor Entity
+ * @property name Názov postavy
+ * @property currentHP Aktuálne životy v boji (Current HP)
+ * @property maxHP Maximálne životy postavy (Max HP)
+ * @property armorClass Obranné číslo Entity (AC)
+ * @property effects Zoznam aktívnych efektov aplikovaných na Entitu
+ * @property imageRes ID drawable zdroja obrázka (reprezentuje výzor)
+ */
 data class EncounterEntity(
     val entityId: Int,
     val name: String,
@@ -12,12 +23,28 @@ data class EncounterEntity(
     val imageRes: Int
 )
 
+/**
+ * Pomocná sealed trieda, ktorá reprezentuje položku v Encounter zozname.
+ * Zabezpečuje, aby bol v Content Liste prístupný ako Číslo kola tak aj zoznam bojujúcich postáv.
+ */
 // Class that helps me put different items into Encounter Content List
 sealed class EncounterListItem {
+    /**
+     * Dátová trieda reprezentuje Entity.
+     */
     data class EntityItem(val entity: EncounterEntity): EncounterListItem()
+
+    /**
+     * Dátová trieda reprezentuje Číslo kola.
+     */
     data class RoundItem(val name: String = ""): EncounterListItem()
 }
 
+/**
+ * Enum, ktorý obsahuje preddefinované obrázkové zdroje pre Entity.
+ *
+ * @property imageRes ID drawable obrázka (výzor postavy)
+ */
 enum class EntityImageResources(val imageRes: Int) {
     BARBARIAN(R.drawable.barbarian),
     BARD(R.drawable.bard),

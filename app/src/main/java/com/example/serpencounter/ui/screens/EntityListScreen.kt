@@ -58,6 +58,14 @@ import com.example.serpencounter.ui.AppViewModelProvider
 import com.example.serpencounter.ui.theme.OldLondonFont
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 
+/**
+ * Obrazovka na zobrazenie aktuálnych postáv uložených v databáze.
+ * Obsahuje horný a dolný panel; centrálnu časť so zoznamom postáv.
+ *
+ * @param onBackButtonClicked Vrátiť sa na domovskú obrazovku
+ * @param onAddCharacterClicked Pridávanie novej postávy do databázy
+ * @param viewModel ViewModel poskytujúci zoznam postáv a operácie nad nimi
+ */
 @Composable
 fun EntityListScreen(
     onBackButtonClicked: () -> Unit,
@@ -96,6 +104,14 @@ fun EntityListScreen(
     }
 }
 
+/**
+ * Horný panel, ktorý obsahuje tlačidlo 'Späť' (na domovskú obrazovku); 'Ďalšie možnosti' (správa postáv v databáze).
+ *
+ * @param onBackButtonClicked Vrátiť sa späť na domovskú obrazovku
+ * @param onAddCharacterClicked Pridanie postavy do databázy
+ * @param onAddDefaultCharactersClicked Pridanie základných (predpripravených) postáv
+ * @param onDeleteAllCharactersClicked Vymazanie všetkých postáv z databázy
+ */
 @Composable
 fun TopListBar(
     onBackButtonClicked: () -> Unit,
@@ -192,6 +208,12 @@ fun TopListBar(
     }
 }
 
+/**
+ * Zobrazuje mriežku postáv v dvoch stĺpcoch.
+ *
+ * @param characters Zoznam postáv na zobrazenie
+ * @param viewModel ViewModel, ktorý obsahuje operácie nad postavami
+ */
 @Composable
 fun EntityGrid(
     characters: List<SerpCharacter>,
@@ -214,6 +236,11 @@ fun EntityGrid(
     }
 }
 
+/**
+ * Karta reprezentujúca jednu postavu v mriežke.
+ * Krátke kliknutie - prepnutie medzi obrázkom a informáciami
+ * Dlhé podržanie - otvorí dialóg na
+ */
 @Composable
 fun EntityListCard(
     character: SerpCharacter,

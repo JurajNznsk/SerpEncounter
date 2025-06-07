@@ -53,6 +53,13 @@ import com.example.serpencounter.ui.info.EntityImageResources
 import com.example.serpencounter.ui.theme.OldLondonFont
 import com.example.serpencounter.ui.viewModels.CharacterEntryViewModel
 
+/**
+ * Obrazovka pre vytváranie novej postavy SerpCharacter.
+ * Obsahuje horný a dolný panel; stredovú časť s formuláron na zadávanie údajov o novej postave.
+ *
+ * @param onSaveButtonClicked Funkcia zavolaná po stlačení tlačidla 'Uložiť' (Na pridávanie postavy do databázy)
+ * @param onCancelButtonClicked Funkcia zavolaná po stlačení tlačidla 'Zrušiť' (Zruší pridávanie [nič sa nepridá])
+ */
 @Composable
 fun CharacterEntryScreen(
     onSaveButtonClicked: () -> Unit,
@@ -84,6 +91,9 @@ fun CharacterEntryScreen(
     }
 }
 
+/**
+ * Horný panel obrazovky.
+ */
 @Composable
 fun TopEntryBar() {
     Surface(
@@ -111,6 +121,13 @@ fun TopEntryBar() {
     }
 }
 
+/**
+ * Stredová časť obrazovky.
+ * Obsahuje 3 textové formuláre na zadanie informácií (Meno, HP, AC); výber obrázka; tlačidlá 'Uložiť / Zrušiť'.
+ *
+ * @param onSaveButtonClicked Uloženie postavy do databázy
+ * @param onCancelButtonClicked Zrušenie činnosti
+ */
 @Composable
 fun CenterEntry(
     onSaveButtonClicked: () -> Unit,
@@ -261,6 +278,13 @@ fun CenterEntry(
     }
 }
 
+/**
+ * Grid komponent na výber obrázka (výzor postavy).
+ * Vybraný obrázok je zvýraznený.
+ *
+ * @param onImageSelected Priradí ID obrázku
+ * @param selectedImageRes ID drawable obrázku
+ */
 @Composable
 fun ImagePickerGrid(
     onImageSelected: (Int) -> Unit,
@@ -303,6 +327,10 @@ fun ImagePickerGrid(
     }
 }
 
+/**
+ * Spodný panel obrazovky (čierny).
+ * Bez funkcionality.
+ */
 @Composable
 fun BottomEntryBar() {
     Surface(

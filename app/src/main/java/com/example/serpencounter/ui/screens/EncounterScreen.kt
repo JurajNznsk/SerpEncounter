@@ -67,8 +67,15 @@ import com.example.serpencounter.ui.info.getEffectIcon
 import com.example.serpencounter.ui.viewModels.CharacterListViewModel
 import com.example.serpencounter.ui.viewModels.EncounterViewModel
 
-// TODO: delete entity from fight
-
+/**
+ * Obrazovka Encounteru.
+ * Obashuje zoznam Entít; ovládacie prvky (časovať, prepínanie entít, prepínanie kôl).
+ * Obsahuje horný a dolný panel; centrálnu časť.
+ * Ovládanie priebehu Encounteru.
+ *
+ * @param onBackButtonClicked Vrátiť sa späť na domovskú obrazovku
+ * @param viewModel ViewModel, ktorý spravuje stav Encounter (entity, čas, kolá)
+ */
 @Composable
 fun EncounterScreen(
     onBackButtonClicked: () -> Unit,
@@ -119,6 +126,13 @@ fun EncounterScreen(
     }
 }
 
+/**
+ * Horný panel, ktorý obsahuje tlačidlo 'Späť', časovač, ponuku s ďalšími možnosťami (pridať postavu, resetovať časovač).
+ *
+ * @param timeSeconds Čas v sekundách
+ * @param onBackButtonClicked Návrat na domovskú obrazovku
+ * @param onResetTimerClicked Resetovanie časovača
+ */
 @Composable
 fun TopEncBar(
     timeSeconds: Int,
@@ -203,6 +217,14 @@ fun TopEncBar(
     }
 }
 
+/**
+ * Dialógové okno, ktoré slúži na pridávanie dostupných SerpCharacterov ako Entity do encounteru.
+ *
+ * @param onClickHideDialog Uzavretie dialógu
+ * @param viewModel ViewModel, ktorý poskytuje dostupné postavy
+ */
+// TODO: odstrániť viewModel ako parameter (lokálna premenná)
+// TODO: zmeniť dokumentačný komentár
 @Composable
 fun EntitySelectionDialog(
     onClickHideDialog: () -> Unit,
@@ -292,6 +314,12 @@ fun EntitySelectionDialog(
     }
 }
 
+/**
+ * Pomocná funkcia, ktorá premení čas v sekundách na reťazec vo formáte HH:MM:SS.
+ *
+ * @param seconds Čas v sekundách
+ * @return format Čas ako reťazec
+ */
 fun formatTime(seconds: Int): String {
     val hour = seconds / 3600
     val min = (seconds % 3600) / 60
@@ -299,6 +327,15 @@ fun formatTime(seconds: Int): String {
     return "%02d:%02d:%02d".format(hour, min, sec)
 }
 
+/**
+ * Zobrazuje zoznam Entít v Encountery (EncounterEntity-s + Round).
+ *
+ * @param roundNum Číslo kola
+ * @param encListItems Zoznam položiek encounteru
+ * @param viewModel ViewModel encounteru
+ * @param onEntityMoveUp Posúvanie entity hore (preusporiadanie entít v zozname)
+ * @param onEntityMoveDown Posúvanie entity dole (preusporiadanie entít v zozname)
+ */
 @Composable
 fun EntityList(
     roundNum: Int,
@@ -326,6 +363,11 @@ fun EntityList(
     }
 }
 
+/**
+ * Zobrazí kartu označujúcu aktuálne kolo Encounteru.
+ *
+ * @param roundNum Číslo aktuálneho kola
+ */
 @Composable
 fun RoundEncCard(
     roundNum: Int
@@ -340,6 +382,15 @@ fun RoundEncCard(
     )
 }
 
+/**
+ * Zobrazí kartu Entity s jej obrázkom, menom, efektami, AC a HP (číslo aj vizuálne).
+ * Po kliknutí poskytuje možnosť upraviť informácie entity.
+ *
+ * @param entity Entita, ktorú karta reprezentuje
+ * @param viewModel ViewModel encounteru; používaný na interakcie
+ * @param onEntityMoveUp Posunie entitu vyššie
+ * @param onEntityMoveDown Posunie entitu nižšie
+ */
 @Composable
 fun EntityEncCard(
     entity: EncounterEntity,
@@ -476,6 +527,15 @@ fun EntityEncCard(
     }
 }
 
+/**
+ * Zobrazí dialóg na upravenie informácií o Entite (zmena: HP, AC, pridanie efektov).
+ *
+ * @param entity Entita, ktorá sa má upraviť
+ * @param onDismiss Zotvorenie dialógu; bez uloženia zmien
+ * @param onConfirm Uloženie zmenených informácií entite
+ * @param onDelete Vymazanie entity z encounteru
+ */
+// TODO: odstránenie z encounteru ak 0 HP
 @Composable
 fun EditEntityDialog(
     entity: EncounterEntity,
@@ -613,6 +673,15 @@ fun EditEntityDialog(
     }
 }
 
+/**
+ * Spodný panel Encounteru.
+ * Obsahuje tlačidlá na ovládanie poradia, zastavenie/spustenie časovača
+ *
+ * @param isRunning Označuje, či je časovač spustený
+ * @param onPlayPauseButtonClicked Toggle na zastavenie/spustenie časovača
+ * @param onForwardButtonClicked Posúvanie poradia vpred
+ * @param onBackwardButtonClicked Posúvanie poradia späť
+ */
 @Composable
 fun BottomEncBar(
     isRunning: Boolean,
@@ -671,6 +740,12 @@ fun BottomEncBar(
     }
 }
 
+/**
+ * Zobrazí tlačidlo na zastavenie/spustenie časovača.
+ *
+ * @param isRunning Ak true - ikona pauzy; flase - ikona prehrávania
+ * @param onClicked Toggle kliknutia na tlačidlo
+ */
 @Composable
 fun PlayPauseTimerButton(
     isRunning: Boolean,
