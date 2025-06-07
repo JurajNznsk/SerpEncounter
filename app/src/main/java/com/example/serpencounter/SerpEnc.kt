@@ -20,7 +20,7 @@ enum class SerpEncScreens {
     Start,
     Encounter,
     List,
-    AddCharacter;
+    CharacterEntry;
 }
 
 /**
@@ -53,10 +53,10 @@ fun SerpEncApp(
         composable(route = SerpEncScreens.List.name) {
             EntityListScreen(
                 onBackButtonClicked = { navController.popBackStack() },
-                onAddCharacterClicked = { navController.navigate(SerpEncScreens.AddCharacter.name)}
+                onAddCharacterClicked = { navController.navigate(SerpEncScreens.CharacterEntry.name)}
             )
         }
-        composable(route = SerpEncScreens.AddCharacter.name) {
+        composable(route = SerpEncScreens.CharacterEntry.name) {
             CharacterEntryScreen(
                 onSaveButtonClicked = { navController.popBackStack() },
                 onCancelButtonClicked = { navController.popBackStack() }

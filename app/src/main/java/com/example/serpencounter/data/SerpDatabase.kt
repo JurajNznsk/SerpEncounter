@@ -22,7 +22,7 @@ abstract class SerpDatabase : RoomDatabase() {
     abstract fun serpCharacterDao(): SerpCharacterDao
 
     companion object {
-        @Volatile
+        @Volatile // Ensures no problems among coroutines
         private var Instance: SerpDatabase? = null
 
         /**
