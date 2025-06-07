@@ -41,6 +41,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -405,7 +406,7 @@ fun EntityEncCard(
     Card(
         onClick = { showDialog = true },
         colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray
+            containerColor = if (entity.currentHP > 0) Color.LightGray else Color.DarkGray
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -435,13 +436,14 @@ fun EntityEncCard(
                     // Name
                     Text(
                         text = entity.name,
-                        fontSize = 25.sp
+                        fontSize = 25.sp,
+                        color = if (entity.currentHP > 0) Color.Black else Color.LightGray
                     )
                     // Sequence number
                     Text(
                         text = "#${entity.entityId}",
                         fontSize = 15.sp,
-                        color = Color.White,
+                        color = if (entity.currentHP > 0) Color.White else Color.LightGray,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 8.dp)
@@ -466,6 +468,7 @@ fun EntityEncCard(
                 Row {
                     Text(
                         text = "AC: ${entity.armorClass}",
+                        color = if (entity.currentHP > 0) Color.Black else Color.LightGray,
                         modifier = Modifier
                             .padding(top = 38.dp)
                     )
@@ -474,6 +477,7 @@ fun EntityEncCard(
 
                     Text(
                         text = "HP: ${entity.currentHP}/${entity.maxHP}",
+                        color = if (entity.currentHP > 0) Color.Black else Color.LightGray,
                         modifier = Modifier
                             .padding(end = 4.dp, top = 38.dp)
                     )
@@ -487,7 +491,7 @@ fun EntityEncCard(
                             .height(6.dp)
                             .padding(end = 4.dp),
                         color = Color(0xFF006400),
-                        trackColor = Color.Red,
+                        trackColor = if (entity.currentHP > 0) Color.Red else Color.Black,
                     )
                 }
             }

@@ -154,26 +154,13 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         if (currentList.isEmpty())
             return
         val mutableList = currentList.toMutableList()
-
-        // Filter out dead entities (currentHP == 0)
-        val aliveEntities = mutableList.filter {
-            it !is EncounterListItem.EntityItem || it.entity.currentHP > 0
-        }.toMutableList()
-        // If first item is RoundItem, increment round
-        if (aliveEntities.firstOrNull() is EncounterListItem.RoundItem) {
+        if (mutableList.firstOrNull() is EncounterListItem.RoundItem) {
             _uiRoundNumber.value++
         }
-        // Rotate only alive entities if possible
-        if (aliveEntities.size > 1) {
-            val first = aliveEntities.removeAt(0)
-            aliveEntities.add(first)
-        }
-        // Keep dead entities and round items that were filtered out
-        val deadEntities = mutableList.filter {
-            it is EncounterListItem.EntityItem && it.entity.currentHP == 0
-        }
-        // Place alive entities first, then dead entities
-        _uiEntityList.value = aliveEntities + deadEntities
+        val first = mutableList.removeAt(0)
+        mutableList.add(first)
+
+        _uiEntityList.value = mutableList
     }
 
     /**
@@ -184,26 +171,13 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         if (currentList.isEmpty())
             return
         val mutableList = currentList.toMutableList()
-
-        // Filter out dead entities (currentHP == 0)
-        val aliveEntities = mutableList.filter {
-            it !is EncounterListItem.EntityItem || it.entity.currentHP > 0
-        }.toMutableList()
-        // Decrement round number when last
-        if (_uiRoundNumber.value > 1 && aliveEntities.lastOrNull() is EncounterListItem.RoundItem) {
+        if (_uiRoundNumber.value > 1 && mutableList.lastOrNull() is EncounterListItem.RoundItem) {
             _uiRoundNumber.value--
         }
-        // Rotate only alive entities
-        if (aliveEntities.size > 1) {
-            val last = aliveEntities.removeAt(aliveEntities.size - 1)
-            aliveEntities.add(0, last)
-        }
-        // Keep dead entities and round items that were filtered out
-        val deadEntities = mutableList.filter {
-            it is EncounterListItem.EntityItem && it.entity.currentHP == 0
-        }
-        // Place alive before dead
-        _uiEntityList.value = aliveEntities + deadEntities
+        val last = mutableList.removeAt(mutableList.size - 1)
+        mutableList.add(0, last)
+
+        _uiEntityList.value = mutableList
     }
 
     /**
