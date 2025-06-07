@@ -13,6 +13,11 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel pre správu logiky encounteru v EncounterScreen.
+ *
+ * @property characterRepository Repozitár, ktorý umožňuje prístup k postavám v databáze a operácie nad nimi
+ */
 class EncounterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
     // EntityList state
     private val _uiEntityList = MutableStateFlow<List<EncounterListItem>>(
@@ -20,6 +25,10 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
             EncounterListItem.RoundItem()
         )
     )
+
+    /**
+     * Verejný zoznam [StateFlow] entít a čísla kola encounteru.
+     */
     val entityList: StateFlow<List<EncounterListItem>> = _uiEntityList.asStateFlow()
 
     // Sequence number for entityId
@@ -27,14 +36,25 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
 
     // RoundNumber state
     private val _uiRoundNumber = MutableStateFlow(1)
+
+    /**
+     * Verejný [StateFlow] s číslom kola encounteru.
+     */
     val roundNumber: StateFlow<Int> = _uiRoundNumber.asStateFlow()
 
     // Timer state
     private val _isTimerRunning = MutableStateFlow(true)
 
+    /**
+     * Informácia o bežiacom čase.
+     */
     val isTimerRunning: StateFlow<Boolean> = _isTimerRunning.asStateFlow()
     // Timer -> seconds
     private val _timeSeconds = MutableStateFlow(0)
+
+    /**
+     * Čas v sekundách.
+     */
     val timeSeconds: StateFlow<Int> = _timeSeconds.asStateFlow()
     // Timer logic
     init {
@@ -53,14 +73,26 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
             }
         }
     }
+
+    /**
+     * Prepína stav časovača (Pause / Play).
+     */
     fun toggleTimer() {
         _isTimerRunning.value = !_isTimerRunning.value
     }
+
+    /**
+     * Resetovanie času na 00:00:00.
+     */
     fun resetTimer() {
         _timeSeconds.value = 0
     }
 
-    // Add SerpCharacter as Entity to "encounter" from Database
+    /**
+     * Pridá postavu dostupnú v databáze do encounteru.
+     *
+     * @param serpCharId ID postavy, ktorá sa má pridať
+     */
     fun addEntityToEncounter(serpCharId: Int) {
         viewModelScope.launch {
             val serpCharacter = characterRepository.getCharacterStream(serpCharId).firstOrNull()
@@ -81,7 +113,12 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
             }
         }
     }
-    // Delete entity from encounter
+
+    /**
+     * Odstráni entitu zo zoznamu encounteru.
+     *
+     * @param entity EncounterEntity, ktorá sa má odstrániť
+     */
     fun deleteEntity(entity: EncounterEntity) {
         viewModelScope.launch {
             _uiEntityList.update { currentList ->
@@ -92,7 +129,11 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         }
     }
 
-    // Updating stats of EncounterEntities
+    /**
+     * Aktualizácia informácií postavy v zozname.
+     *
+     * @param entity Upravená Entita, ktorá má nahradiť pôvodnú
+     */
     fun updateEntity(entity: EncounterEntity) {
         _uiEntityList.update { currentList ->
             currentList.map { item ->
@@ -105,7 +146,9 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         }
     }
 
-    // Entity list functionality
+    /**
+     * Presunie prvý prvok zoznamu na koniec; zvýši číslo kola, ak je to potrebné.
+     */
     fun rotateForward() {
         val currentList = _uiEntityList.value
         if (currentList.isEmpty())
@@ -120,6 +163,9 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         _uiEntityList.value = mutableList
     }
 
+    /**
+     * Presunie posledný prvok zoznamu na začiatok; zníži číslo kola, ak je to potrebné.
+     */
     fun rotateBackwards() {
         val currentList = _uiEntityList.value
         if (currentList.isEmpty())
@@ -134,6 +180,11 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         _uiEntityList.value = mutableList
     }
 
+    /**
+     * Presunie Entitu o jednu pozíciu vyššie v zozname.
+     *
+     * @param entity Entita, ktorá sa má posunúť vyššie
+     */
     fun moveEntityUp(entity: EncounterEntity) {
         _uiEntityList.update { currentList ->
             val list = currentList.toMutableList()
@@ -149,6 +200,11 @@ class EncounterViewModel(private val characterRepository: CharacterRepository) :
         }
     }
 
+    /**
+     * Presunie Entitu o jednu pozíciu nižšie v zozname.
+     *
+     * @param entity Entita, ktorá sa má posunúť nižšie
+     */
     fun moveEntityDown(entity: EncounterEntity) {
         _uiEntityList.update { currentList ->
             val list = currentList.toMutableList()

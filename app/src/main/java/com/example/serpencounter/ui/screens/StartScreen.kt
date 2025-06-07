@@ -25,6 +25,14 @@ import androidx.compose.ui.unit.sp
 import com.example.serpencounter.R
 import com.example.serpencounter.ui.theme.OldLondonFont
 
+/**
+ * Domovská obrazovka aplikácie.
+ * Obsahuje 'Logo' a tri tlačidlá, ktorými sa naviguje do ostatných častí aplikácie.
+ *
+ * @param onEncounterButtonClicked Presun na obrazovku EncounterScreen
+ * @param onListButtonClicked Presun na list s postavami v databáze
+ * @param onExitButtonClicked Presun na domovskú stránku telefónu
+ */
 @Composable
 fun StartScreen(
     onEncounterButtonClicked: () -> Unit,

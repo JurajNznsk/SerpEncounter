@@ -240,6 +240,9 @@ fun EntityGrid(
  * Karta reprezentujúca jednu postavu v mriežke.
  * Krátke kliknutie - prepnutie medzi obrázkom a informáciami
  * Dlhé podržanie - otvorí dialóg na
+ *
+ * @param character Postava, ktorá sa má zobraziť
+ * @param onCharacterPressed Vymazanie postavy pri dlhom podržaní
  */
 @Composable
 fun EntityListCard(
@@ -393,6 +396,9 @@ fun EntityListCard(
     }
 }
 
+/**
+ * Dolný panel, ktorý zobrazuje tip pre používateľa.
+ */
 @Composable
 fun BottomListBar() {
     Surface(

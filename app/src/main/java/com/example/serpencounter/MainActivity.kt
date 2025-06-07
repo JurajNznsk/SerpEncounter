@@ -8,6 +8,10 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
+/**
+ * Hlavná aktivita aplikácie SerpEncounter.
+ * Inicializuje používateľské rozhranie pomocou Jetpack Compose a nastavuje preferencie pre vzhľad systémových lišt a orientáciu obrazovky.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge(
