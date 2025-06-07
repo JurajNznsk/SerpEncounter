@@ -41,5 +41,3 @@ object AppViewModelProvider {
  */
 fun CreationExtras.serpEncApplication(): SerpEncounterApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as SerpEncounterApplication)
-
-//TODO: odchytiť výnimku

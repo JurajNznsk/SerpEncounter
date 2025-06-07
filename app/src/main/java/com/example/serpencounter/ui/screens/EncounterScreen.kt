@@ -90,7 +90,8 @@ fun EncounterScreen(
         topBar = { TopEncBar(
             timeSeconds = timeSeconds,
             onBackButtonClicked = onBackButtonClicked,
-            onResetTimerClicked = { viewModel.resetTimer() }
+            onResetTimerClicked = { viewModel.resetTimer() },
+            encViewModel = viewModel
         ) },
         bottomBar = { BottomEncBar(
             isRunning = timerRunning,
@@ -137,7 +138,8 @@ fun EncounterScreen(
 fun TopEncBar(
     timeSeconds: Int,
     onBackButtonClicked: () -> Unit,
-    onResetTimerClicked: () -> Unit
+    onResetTimerClicked: () -> Unit,
+    encViewModel: EncounterViewModel
 ) {
     Surface(
         color = Color.Black,
@@ -209,7 +211,8 @@ fun TopEncBar(
             }
             if (showEntityPickDialog) {
                 EntitySelectionDialog(
-                    onClickHideDialog = { showEntityPickDialog = false }
+                    onClickHideDialog = { showEntityPickDialog = false },
+                    encViewModel = encViewModel
                 )
             }
 
@@ -221,17 +224,15 @@ fun TopEncBar(
  * Dialógové okno, ktoré slúži na pridávanie dostupných SerpCharacterov ako Entity do encounteru.
  *
  * @param onClickHideDialog Uzavretie dialógu
- * @param viewModel ViewModel, ktorý poskytuje dostupné postavy
+ * @param encViewModel ViewModel, na správu logiky encounteru
  */
-// TODO: odstrániť viewModel ako parameter (lokálna premenná)
-// TODO: zmeniť dokumentačný komentár
 @Composable
 fun EntitySelectionDialog(
     onClickHideDialog: () -> Unit,
-    viewModel: CharacterListViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    encViewModel: EncounterViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val serpCharacterList by viewModel.charactersUiState.collectAsState()
-    val encViewModel = viewModel<EncounterViewModel>(factory = AppViewModelProvider.Factory)
+    val charListViewModel = viewModel<CharacterListViewModel>(factory = AppViewModelProvider.Factory)
+    val serpCharacterList by charListViewModel.charactersUiState.collectAsState()
 
     Dialog(
         onDismissRequest = onClickHideDialog
